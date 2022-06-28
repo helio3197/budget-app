@@ -3,9 +3,22 @@
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
+  <div class="field" data-controller="avatar">
+    <div>
+      <%= image_tag 'profile-pic.png', data: { avatar_target: 'preview' } %>
+    </div>
+    <%= f.label :avatar %><br />
+    <%= f.file_field :avatar, data: { action: 'change->avatar#update', avatar_target: 'picture' } %>
+  </div>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
+  </div>
+
   <div class="field">
     <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= f.email_field :email, autocomplete: "email" %>
   </div>
 
   <div class="field">

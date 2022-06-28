@@ -31,6 +31,8 @@ gem 'rubocop'
 
 gem 'devise'
 
+gem 'file_validators'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 

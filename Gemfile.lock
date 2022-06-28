@@ -98,6 +98,9 @@ GEM
     diff-lcs (1.5.0)
     digest (3.1.0)
     erubi (1.10.0)
+    file_validators (3.0.0)
+      activemodel (>= 3.2)
+      mime-types (>= 1.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
     i18n (1.10.0)
@@ -119,6 +122,9 @@ GEM
     marcel (1.0.2)
     matrix (0.4.2)
     method_source (1.0.0)
+    mime-types (3.4.1)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2022.0105)
     mini_mime (1.1.2)
     minitest (5.16.1)
     msgpack (1.5.2)
@@ -267,6 +273,7 @@ DEPENDENCIES
   capybara
   debug
   devise
+  file_validators
   importmap-rails
   jbuilder
   pg (~> 1.1)
