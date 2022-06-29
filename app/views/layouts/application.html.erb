@@ -11,9 +11,12 @@
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-  
+    <% if notice || alert %>
+      <p class="app-notice"><%= notice %></p>
+      <p class="app-alert"><%= alert %></p>
+    <% end %>
+
     <%= yield %>
+
   </body>
 </html>
