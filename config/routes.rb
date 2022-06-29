@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users, path: '', path_names: { edit: 'account' }
 
+  resources :categories
+
   # devise_scope :user do
   #   get 'sign_in', to: 'devise/sessions#new'
   #   get 'sign_up', to: 'devise/registrations#new'
@@ -12,5 +14,5 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
-  # root "articles#index"
+  root "categories#index"
 end
