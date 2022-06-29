@@ -112,6 +112,8 @@ GEM
     file_validators (3.0.0)
       activemodel (>= 3.2)
       mime-types (>= 1.0)
+    font-awesome-sass (6.1.1)
+      sassc (~> 2.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
     i18n (1.10.0)
@@ -298,6 +300,7 @@ DEPENDENCIES
   debug
   devise
   file_validators
+  font-awesome-sass
   importmap-rails
   jbuilder
   pg (~> 1.1)
