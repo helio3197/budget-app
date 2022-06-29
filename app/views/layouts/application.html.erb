@@ -12,11 +12,11 @@
 
   <body>
     <% if content_for? :navbar %>
-      <section class="container-fluid navbar bg-primary">
+      <nav class="container-fluid navbar navbar-dark bg-primary">
         <div class="container-sm d-flex">
           <%= yield :navbar %>
         </div>
-      </section>
+      </nav>
     <% end %>
 
     <% if notice || alert %>
