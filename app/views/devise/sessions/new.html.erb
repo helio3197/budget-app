@@ -2,27 +2,31 @@
   <%= render 'header' %>
 <% end %>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+<section class="container-fluid">
+  <div class="container-sm py-3">
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'form mb-3' }) do |f| %>
+      <div class="field mb-2">
+        <%= f.label :email, class: 'visually-hidden' %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', placeholder: 'Email' %>
+      </div>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
+      <div class="field mb-2">
+        <%= f.label :password, class: 'visually-hidden' %>
+        <%= f.password_field :password, autocomplete: "current-password", class: 'form-control', placeholder: 'Password' %>
+      </div>
 
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+      <% if devise_mapping.rememberable? %>
+        <div class="field">
+          <%= f.check_box :remember_me %>
+          <%= f.label :remember_me %>
+        </div>
+      <% end %>
+
+    <% end %>
+
+    <div class="text-center">
+      <%= render "devise/shared/links" %>
     </div>
-  <% end %>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
   </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</section>
