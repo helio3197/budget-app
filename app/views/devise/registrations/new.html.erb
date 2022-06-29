@@ -2,45 +2,59 @@
   <%= render 'header_new' %>
 <% end %>
 
-<h2>Sign up</h2>
+<section class="container-fluid">
+  <div class="container-sm py-3">
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'form' }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+      <div class="field avatar" data-controller="avatar">
+        <div class="preview">
+          <%= image_tag 'profile-pic.png', data: { avatar_target: 'preview' } %>
+        </div>
+        <div class="image-upload">
+          <div class="file-picker">
+            <%= f.label :avatar, 'Upload picture' %>
+            <%= f.file_field :avatar, data: { action: 'change->avatar#update', avatar_target: 'picture' },
+                                      accept: 'image/jpeg, image/png, image/gif' %>
+          </div>
+          <div class="file-selection">
+            <small data-avatar-target="fileName">No file chosen...</small>
+            <button type="button" class="d-none" data-avatar-target="clearBtn" data-action="click->avatar#destroy">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+        </div>
+      </div>
 
-  <div class="field" data-controller="avatar">
-    <div>
-      <%= image_tag 'profile-pic.png', data: { avatar_target: 'preview' } %>
-    </div>
-    <%= f.label :avatar %><br />
-    <%= f.file_field :avatar, data: { action: 'change->avatar#update', avatar_target: 'picture' } %>
+      <div class="field">
+        <%= f.label :name %><br />
+        <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
+      </div>
+
+      <div class="field">
+        <%= f.label :email %><br />
+        <%= f.email_field :email, autocomplete: "email" %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password %>
+        <% if @minimum_password_length %>
+        <em>(<%= @minimum_password_length %> characters minimum)</em>
+        <% end %><br />
+        <%= f.password_field :password, autocomplete: "new-password" %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password_confirmation %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "Sign up" %>
+      </div>
+    <% end %>
+
+    <%= render "devise/shared/links" %>
+
   </div>
-
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</section>
