@@ -10,10 +10,21 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-  
+  <body <%= 'class=pt-5' unless !user_signed_in? && current_page?(root_path) %>>
+    <% if content_for? :navbar %>
+      <nav class="container-fluid navbar navbar-dark bg-primary fixed-top">
+        <div class="container-sm d-flex">
+          <%= yield :navbar %>
+        </div>
+      </nav>
+    <% end %>
+
+    <% if notice || alert %>
+      <p class="app-notice"><%= notice %></p>
+      <p class="app-alert"><%= alert %></p>
+    <% end %>
+
     <%= yield %>
+
   </body>
 </html>
