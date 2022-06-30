@@ -1,0 +1,38 @@
+<%= form_with(model: category, url: categories_path, class: 'form', id: 'new_category') do |form| %>
+  <% if category.errors.any? %>
+    <div>
+      <h2><%= pluralize(category.errors.count, "error") %> prohibited this category from being saved:</h2>
+      <ul>
+        <% category.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field avatar mb-3" data-controller="avatar">
+    <div class="preview">
+      <%= image_tag 'placeholder-icon.png', data: { avatar_target: 'preview' }, alt: 'category-icon',
+                                            class: 'rounded' %>
+    </div>
+    <div class="image-upload">
+      <div class="file-picker">
+        <%= form.label :icon, 'Upload icon' %>
+        <%= form.file_field :icon, data: { action: 'change->avatar#update', avatar_target: 'picture' },
+                                  accept: 'image/jpeg, image/png, image/gif' %>
+      </div>
+      <div class="file-selection">
+        <small data-avatar-target="fileName">No file chosen...</small>
+        <button type="button" class="d-none" data-avatar-target="clearBtn" data-action="click->avatar#destroy">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= form.label :name, class: 'd-none' %>
+    <%= form.text_field :name, autofocus: true, autocomplete: 'name', class: 'form-control', placeholder: 'Name' %>
+  </div>
+
+<% end %>

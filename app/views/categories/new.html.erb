@@ -1,0 +1,9 @@
+<% content_for :navbar do %>
+  <%= render 'header_new' %>
+<% end %>
+
+<section class="container-fluid">
+  <div class="container-sm py-3">
+    <%= render 'form', category: @category %>
+  </div>
+</section>

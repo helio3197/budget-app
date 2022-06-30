@@ -2,8 +2,13 @@
   <%= render 'header_index' %>
 <% end %>
 
-<section class="container-fluid">
-  <div class="container-sm">
-    
+<section class="container-fluid categories">
+  <div class="container-sm py-3 d-flex flex-column">
+    <% if @categories.empty? %>
+      <h3 class="text-center">There are no categories yet.</h3>
+    <% end %>
+    <div class="mt-auto new-category-btn">
+      <%= link_to 'ADD CATEGORY', new_category_path, class: 'btn btn-secondary' %>
+    </div>
   </div>
 </section>

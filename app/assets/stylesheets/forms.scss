@@ -2,6 +2,10 @@
   .avatar {
     display: flex;
     align-items: center;
+    border: 1px solid lightgray;
+    background-color: white;
+    border-radius: 0.25rem;
+    padding: 6px;
 
     .preview {
       width: 25%;

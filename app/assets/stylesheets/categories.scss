@@ -1,0 +1,18 @@
+.categories {
+  height: 100%;
+
+  > div {
+    min-height: 100%;
+  }
+}
+
+.new-category-btn {
+  text-align: center;
+
+  .btn {
+    width: 100%;
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+    max-width: 450px;
+  }
+}
