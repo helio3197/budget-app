@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users, path: '', path_names: { edit: 'account' }
+  devise_for :users, path: '', path_names: { edit: 'account' }, controllers: { registrations: 'registrations' }
 
   resources :categories
 
