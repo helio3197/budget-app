@@ -28,7 +28,9 @@
             </button>
           </div>
           <% if current_user.avatar.present? %>
-            <button type="button" class="remove-avatar">Remove profile picture</button>
+            <button type="button" class="remove-avatar" data-avatar-target="removeAvatarBtn"
+                    data-action="click->avatar#removeAvatar">Remove profile picture</button>
+            <span class="d-none" data-avatar-target="placeHolderPic"><%= asset_path 'profile-pic.png' %></span>
           <% end %>
         </div>
       </div>
