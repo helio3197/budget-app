@@ -3,7 +3,7 @@ class CategoriesController < ApplicationController
 
   def index
     if user_signed_in?
-      @categories = current_user.categories
+      @categories = current_user.categories.includes([icon_attachment: :blob])
     else
       render :home
     end
@@ -14,7 +14,6 @@ class CategoriesController < ApplicationController
   end
 
   def create
-    # @category = current_user.categories.new(category_params)
     @category = Category.new(**category_params, user: current_user)
 
     if @category.save

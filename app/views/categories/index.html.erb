@@ -6,6 +6,10 @@
   <div class="container-sm py-3 d-flex flex-column">
     <% if @categories.empty? %>
       <h3 class="text-center">There are no categories yet.</h3>
+    <% else %>
+      <ul class="categories-list">
+        <%= render @categories %>
+      </ul>
     <% end %>
     <div class="mt-auto new-category-btn">
       <%= link_to 'ADD CATEGORY', new_category_path, class: 'btn btn-secondary' %>

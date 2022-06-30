@@ -1,0 +1,10 @@
+<li class="category-item">
+  <%= image_tag category.icon, alt: 'icon', class: 'category-item-icon' %>
+  <div class="px-2 d-flex flex-column">
+    <p class="mt-2 mb-0"><%= category.name %></p>
+    <small class="mt-auto"><%= category.created_at.strftime "%m-%d-%Y" %></small>
+  </div>
+  <div class="ms-auto">
+    <p>$0</p>
+  </div>
+</li>

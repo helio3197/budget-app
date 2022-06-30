@@ -16,3 +16,29 @@
     max-width: 450px;
   }
 }
+
+.categories-list {
+  margin: 0 -0.75rem;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.category-item {
+  display: flex;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px soldi lightgray;
+  background-color: white;
+
+  .category-item-icon {
+    width: 25%;
+    border: 1px solid lightgray;
+    border-radius: 0.25rem;
+    max-width: 90px;
+    min-width: 68px;
+    aspect-ratio: 1 / 1;
+  }
+}
