@@ -1,5 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :authenticate_user!, except: %i[index]
+  before_action :set_category, only: %i[edit update destroy]
 
   def index
     if user_signed_in?
@@ -7,6 +8,10 @@ class CategoriesController < ApplicationController
     else
       render :home
     end
+  end
+
+  def show
+    @category = current_user.categories.includes(:operations).find(params[:id])
   end
 
   def new
@@ -27,5 +32,9 @@ class CategoriesController < ApplicationController
 
   def category_params
     params.require(:category).permit :name, :icon
+  end
+
+  def set_category
+    @category = current_user.categories.find(params[:id])
   end
 end

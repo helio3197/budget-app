@@ -1,3 +1,5 @@
+@import "variables";
+
 .navbar {
   h1,
   h2,
@@ -16,7 +18,7 @@
   .offcanvas {
     max-width: 80%;
     min-width: 220px;
-    background-color: $primary;
+    background: $primary;
 
     @media (max-width: 220px) {
       max-width: 100%;
