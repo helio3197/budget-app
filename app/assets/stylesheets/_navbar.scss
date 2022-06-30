@@ -1,11 +1,19 @@
 @import "variables";
 
+.navbar-padding {
+  padding-top: 41.44px;
+}
+
 .navbar {
   h1,
   h2,
   p {
     margin: 0;
     color: white;
+  }
+
+  h2 {
+    font-size: 1.325rem;
   }
 
   .back-btn {

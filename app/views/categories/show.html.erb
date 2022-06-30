@@ -1,0 +1,32 @@
+<% content_for :navbar do %>
+  <%= render 'header_show' %>
+<% end %>
+
+<section class="d-flex flex-column h-100 pb-3">
+  <div class="container-fluid bg-light">
+    <div class="container-sm py-2">
+      <p class="m-0">Total expenses: <span class="fw-bold">$<%= @category.operations.sum :amount %></span></p>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="container-sm py-2 px-0">
+      <div class="category-item flex-column">
+        <div class="d-flex align-items-center gap-2">
+          <%= image_tag @category.icon, alt: 'icon', class: 'category-item-icon' %>
+          <h3 class="m-0"><%= @category.name %></h3>
+        </div>
+        <div class="px-2 d-flex flex-column mt-2">
+          <small class="mt-auto">Created at: <%= @category.created_at.strftime "%m-%d-%Y" %></small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid bg-light py-2">
+    <div class="container-sm">
+      <h4 class="m-0 text-center">LATEST TRADES</h4>
+    </div>
+  </div>
+  <div class="mt-auto new-category-btn px-4">
+    <%= link_to 'ADD TRANSACTION', new_category_operation_path(@category), class: 'btn btn-secondary' %>
+  </div>
+</section>

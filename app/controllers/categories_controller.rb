@@ -11,7 +11,7 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    @category = current_user.categories.includes(:operations).find(params[:id])
+    @category = current_user.categories.find(params[:id])
   end
 
   def new
