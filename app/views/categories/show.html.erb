@@ -2,7 +2,7 @@
   <%= render 'header_show' %>
 <% end %>
 
-<section class="d-flex flex-column h-100 pb-3">
+<section class="d-flex flex-column h-100 pb-3" style="padding-top: 0.4rem">
   <div class="container-fluid bg-light">
     <div class="container-sm py-2">
       <p class="m-0">Total expenses: <span class="fw-bold">$<%= @category.operations.sum :amount %></span></p>
@@ -13,7 +13,7 @@
       <div class="category-item flex-column">
         <div class="d-flex align-items-center gap-3">
           <%= image_tag @category.icon, alt: 'icon', class: 'category-item-icon' %>
-          <h3 class="m-0"><%= @category.name %></h3>
+          <h3 class="m-0 overflow-hidden"><%= @category.name %></h3>
         </div>
         <div class="px-2 d-flex flex-column mt-2">
           <small class="mt-auto">Created at: <%= @category.created_at.strftime "%m-%d-%Y" %></small>
@@ -30,7 +30,7 @@
     <p class="text-center mt-3">There are no transactions yet.</p>
   <% else %>
     <ul>
-      <%= render @category.operations %>
+      <%= render partial: 'operation', collection: @category.operations %>
     </ul>
   <% end %>
   <div class="mt-auto new-category-btn px-4">

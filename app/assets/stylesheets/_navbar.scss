@@ -6,6 +6,7 @@
 
 .navbar {
   flex-wrap: nowrap;
+  min-height: 48px;
 
   h1,
   h2,
@@ -16,6 +17,9 @@
 
   h2 {
     font-size: 1.325rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .back-btn {
