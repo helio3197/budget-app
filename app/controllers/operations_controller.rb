@@ -6,7 +6,13 @@ class OperationsController < ApplicationController
   end
 
   def create
-    @operation = Operation.new(**operation_params, user: current_user)
+    parsed_params = operation_params
+    parsed_params[:categories] = if parsed_params[:categories].empty?
+                                   [Category.find(params[:category_id])]
+                                 else
+                                   Category.find(*JSON.parse(parsed_params[:categories]) << params[:category_id])
+                                 end
+    @operation = Operation.new(**parsed_params, user: current_user)
 
     if @operation.save
       redirect_to category_path(params[:category_id]), notice: 'Transaction created successfully.'
@@ -20,6 +26,6 @@ class OperationsController < ApplicationController
   private
 
   def operation_params
-    params.require(:operation).permit :name, :amount
+    params.require(:operation).permit :name, :amount, :categories
   end
 end
