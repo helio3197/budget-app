@@ -29,9 +29,13 @@
   <% if @category.operations.empty? %>
     <p class="text-center mt-3">There are no transactions yet.</p>
   <% else %>
-    <ul>
-      <%= render partial: 'operation', collection: @category.operations %>
-    </ul>
+    <div class="container-fluid overflow-auto">
+      <div class="container-sm pt-2">
+        <ul class="categories-list gap-1">
+          <%= render partial: 'operation', collection: @category.operations %>
+        </ul>
+      </div>
+    </div>
   <% end %>
   <div class="mt-auto new-category-btn px-4">
     <%= link_to 'ADD TRANSACTION', new_category_operation_path(@category), class: 'btn btn-secondary' %>
