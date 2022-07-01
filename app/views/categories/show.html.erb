@@ -11,7 +11,7 @@
   <div class="container-fluid">
     <div class="container-sm py-2 px-0">
       <div class="category-item flex-column">
-        <div class="d-flex align-items-center gap-2">
+        <div class="d-flex align-items-center gap-3">
           <%= image_tag @category.icon, alt: 'icon', class: 'category-item-icon' %>
           <h3 class="m-0"><%= @category.name %></h3>
         </div>
@@ -23,9 +23,16 @@
   </div>
   <div class="container-fluid bg-light py-2">
     <div class="container-sm">
-      <h4 class="m-0 text-center">LATEST TRADES</h4>
+      <h4 class="m-0">Latest transactions</h4>
     </div>
   </div>
+  <% if @category.operations.empty? %>
+    <p class="text-center mt-3">There are no transactions yet.</p>
+  <% else %>
+    <ul>
+      <%= render @category.operations %>
+    </ul>
+  <% end %>
   <div class="mt-auto new-category-btn px-4">
     <%= link_to 'ADD TRANSACTION', new_category_operation_path(@category), class: 'btn btn-secondary' %>
   </div>

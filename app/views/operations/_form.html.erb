@@ -1,0 +1,50 @@
+<%= form_with(model: operation, url: category_operations_path, class: 'form', id: 'new_operation') do |form| %>
+  <% if operation.errors.any? %>
+    <div>
+      <h2><%= pluralize(operation.errors.count, "error") %> prohibited this transaction from being saved:</h2>
+      <ul>
+        <% operation.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field mb-2">
+    <%= form.label :name, class: 'd-none' %>
+    <%= form.text_field :name, autofocus: true, autocomplete: 'name', class: 'form-control', placeholder: 'Name' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :amount, class: 'd-none' %>
+    <%= form.number_field :amount, autofocus: true, autocomplete: 'amount', class: 'form-control',
+                                   placeholder: 'Amount', min: 0 %>
+  </div>
+
+  <div class="mt-2 p-2 bg-light border border-gray-400 rounded">
+    <p class="mb-1 text-gray-600">Current category:</p>
+    <div class="d-flex gap-2">
+      <img src=<%= url_for current_category.icon %> class="icon-thumbnail" alt="current category">
+      <p class="my-auto fs-4"><%= current_category.name %></p>
+    </div>
+  </div>
+
+  <% if others_categories.any? %>
+    <div class="mt-2 p-2 bg-light border border-gray-400 rounded" data-controller="dropdown-picker"
+         data-action="dropdown-picker:updated@window->dropdown-picker#updateDropdownList selected-item:unselect@window->dropdown-picker#unselect">
+      <ul class="m-0 list-group">
+        <%= render partial: 'selected_category', collection: others_categories %>
+      </ul>
+      <div class="dropdown" data-dropdown-picker-target="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+          Add another category
+        </button>
+        <ul class="dropdown-menu dropdown-menu-dark mw-100" aria-labelledby="dropdownMenuButton" data-dropdown-picker-target="dropdownList">
+          <%= render partial: 'category', collection: others_categories %>
+        </ul>
+      </div>
+      <input type="hidden" name="operation[categories]" data-dropdown-picker-target="categoriesInput">
+    </div>
+  <% end %>
+
+<% end %>
