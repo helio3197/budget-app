@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Recipes list page', type: :system do
+RSpec.describe 'Categories list page', type: :system do
   subject do
     @u = User.create(name: 'Maria', email: 'maria@example.com', password: 'password')
 
