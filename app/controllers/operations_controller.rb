@@ -1,4 +1,6 @@
 class OperationsController < ApplicationController
+  before_action :authenticate_user!
+
   def new
     @operation = Operation.new
     @current_category = Category.find(params[:category_id])
@@ -7,7 +9,7 @@ class OperationsController < ApplicationController
 
   def create
     parsed_params = operation_params
-    parsed_params[:categories] = if parsed_params[:categories].empty?
+    parsed_params[:categories] = if parsed_params[:categories].nil? || parsed_params[:categories].empty?
                                    [Category.find(params[:category_id])]
                                  else
                                    Category.find(*JSON.parse(parsed_params[:categories]) << params[:category_id])
