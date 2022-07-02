@@ -88,6 +88,7 @@ Give a ⭐️ if you like this project!
 ## Acknowledgments
 
 - Thanks to Microverse for the guidelines.
+- Original design by **Gregoire Vella**: [Behance](https://www.behance.net/gregoirevella)
 
 
 ## 📝 License
