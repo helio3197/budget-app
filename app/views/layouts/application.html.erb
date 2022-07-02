@@ -10,7 +10,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body <%= 'class=navbar-padding' unless !user_signed_in? && current_page?(root_path) %>>
+  <body class="d-flex flex-column <%= 'navbar-padding' unless !user_signed_in? && current_page?(root_path) %>">
     <% if content_for? :navbar %>
       <nav class="container-fluid navbar navbar-dark bg-primary fixed-top">
         <div class="container-sm d-flex p-0">
@@ -19,9 +19,18 @@
       </nav>
     <% end %>
 
-    <% if notice || alert %>
-      <p class="app-notice"><%= notice %></p>
-      <p class="app-alert"><%= alert %></p>
+    <% if notice %>
+      <div class="alert alert-secondary alert-dismissible fade show mt-2 mb-0"role="alert">
+        <strong><%= notice %></strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <% end %>
+
+    <% if alert %>
+      <div class="alert alert-secondary alert-dismissible fade show mt-2 mb-0"role="alert">
+        <strong><%= alert %></strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
     <% end %>
 
     <%= yield %>

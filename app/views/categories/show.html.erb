@@ -2,7 +2,7 @@
   <%= render 'header_show' %>
 <% end %>
 
-<section class="d-flex flex-column h-100 pb-3" style="padding-top: 0.4rem">
+<section class="d-flex flex-column h-100 pb-3 overflow-hidden" style="padding-top: 0.4rem">
   <div class="container-fluid bg-light">
     <div class="container-sm py-2">
       <p class="m-0">Total expenses: <span class="fw-bold">$<%= @category.operations.sum :amount %></span></p>

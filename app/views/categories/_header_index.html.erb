@@ -22,9 +22,6 @@
         <%= link_to 'Account settings', edit_user_registration_path, class: 'nav-link', aria: { current: 'page' } %>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
-      <li class="nav-item">
         <%= link_to 'Sign out', destroy_user_session_path, class: 'nav-link', aria: { current: 'page' },
                                                            data: { turbo_method: 'delete' }, status: :see_other %>
       </li>
