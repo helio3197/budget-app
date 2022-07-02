@@ -1,9 +1,25 @@
+@import "variables";
+
+.navbar-padding {
+  padding-top: 41.44px;
+}
+
 .navbar {
+  flex-wrap: nowrap;
+  min-height: 48px;
+
   h1,
   h2,
   p {
     margin: 0;
     color: white;
+  }
+
+  h2 {
+    font-size: 1.325rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .back-btn {
@@ -16,7 +32,7 @@
   .offcanvas {
     max-width: 80%;
     min-width: 220px;
-    background-color: $primary;
+    background: $primary;
 
     @media (max-width: 220px) {
       max-width: 100%;

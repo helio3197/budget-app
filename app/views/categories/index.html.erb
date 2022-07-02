@@ -2,17 +2,39 @@
   <%= render 'header_index' %>
 <% end %>
 
-<section class="container-fluid categories">
-  <div class="container-sm py-3 d-flex flex-column">
-    <% if @categories.empty? %>
-      <h3 class="text-center">There are no categories yet.</h3>
-    <% else %>
-      <ul class="categories-list">
-        <%= render @categories %>
-      </ul>
-    <% end %>
-    <div class="mt-auto new-category-btn">
-      <%= link_to 'ADD CATEGORY', new_category_path, class: 'btn btn-secondary' %>
+<section class="pb-3 pt-2 d-flex flex-column h-100">
+  <% if params[:search].present? %>
+    <div class="container-fluid py-2 bg-light">
+      <div class="container-sm px-0 d-flex">
+        <p class="m-0">Searching <span class="fw-bold">"<%= params[:search] %>"</span></p>
+        <%= link_to categories_path, class: 'btn btn-link py-0', title: 'Clear search' do %>
+          <i class="fa-solid fa-xmark"></i>
+        <% end %>
+      </div>
     </div>
+  <% end %>
+  <div hidden class="container-fluid bg-light py-2" style="margin-top: -1px" data-controller="search-item" data-action="search-item:update@window->search-item#toggleComponent">
+    <form class="input-group container-sm px-0" method="get" action="/categories">
+      <input type="text" class="form-control" required name="search" placeholder="Search by category name" aria-label="Search by category name" aria-describedby="search-btn">
+      <button class="btn btn-secondary" type="submit" id="search-btn">Search</button>
+    </form>
+  </div>
+  <div class="container-fluid pt-2 d-flex flex-column categories overflow-auto">
+    <div class="container-sm d-flex flex-column">
+      <% if @categories.empty? %>
+        <% if params[:search].present? %>
+          <h3 class="text-center">There are nor results for the search query.</h3>
+        <% else %>
+          <h3 class="text-center">There are no categories yet.</h3>
+        <% end %>
+      <% else %>
+        <ul class="categories-list">
+          <%= render @categories %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+  <div class="mt-auto new-category-btn container-fluid">
+    <%= link_to 'ADD CATEGORY', new_category_path, class: 'btn btn-secondary' %>
   </div>
 </section>

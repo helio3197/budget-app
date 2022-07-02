@@ -50,13 +50,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_28_234656) do
     t.index ["user_id"], name: "index_categories_on_user_id"
   end
 
-  create_table "category_operations", id: false, force: :cascade do |t|
+  create_table "categories_operations", id: false, force: :cascade do |t|
     t.bigint "category_id", null: false
     t.bigint "operation_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["category_id"], name: "index_category_operations_on_category_id"
-    t.index ["operation_id"], name: "index_category_operations_on_operation_id"
+    t.index ["category_id"], name: "index_categories_operations_on_category_id"
+    t.index ["operation_id"], name: "index_categories_operations_on_operation_id"
   end
 
   create_table "operations", force: :cascade do |t|
@@ -84,7 +84,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_28_234656) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "categories", "users"
-  add_foreign_key "category_operations", "categories"
-  add_foreign_key "category_operations", "operations"
+  add_foreign_key "categories_operations", "categories"
+  add_foreign_key "categories_operations", "operations"
   add_foreign_key "operations", "users"
 end

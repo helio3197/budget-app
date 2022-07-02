@@ -12,8 +12,7 @@
  *
  */
 
-$primary: #3778c2;
-
+@import "variables";
 @import "font-awesome";
 @import "bootstrap";
 @import "home";
@@ -36,4 +35,35 @@ body {
   background-color: transparent;
   color: $primary;
   text-decoration: underline;
+}
+
+.icon-thumbnail {
+  width: 25%;
+  border: 1px solid lightgray;
+  border-radius: 0.25rem;
+  max-width: 90px;
+  min-width: 68px;
+  aspect-ratio: 1 / 1;
+}
+
+.dropdow-icon-thumbnail {
+  width: 35px;
+  min-width: 0;
+  flex-shrink: 0;
+}
+
+.border-gray-400 {
+  border-color: $gray-400 !important;
+}
+
+.text-gray-600 {
+  color: $gray-600 !important;
+}
+
+.on .item-on {
+  display: none !important;
+}
+
+.off .item-off {
+  display: none !important;
 }
