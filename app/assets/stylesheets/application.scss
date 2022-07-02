@@ -59,3 +59,11 @@ body {
 .text-gray-600 {
   color: $gray-600 !important;
 }
+
+.on .item-on {
+  display: none !important;
+}
+
+.off .item-off {
+  display: none !important;
+}

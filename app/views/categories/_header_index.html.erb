@@ -32,4 +32,8 @@
   </div>
 </div>
 <h2>CATEGORIES</h2>
-<button form="new_user" class="action-btn btn btn-link text-light fs-5 p-0">Search</button>
+<button type="button" class="action-btn btn btn-link text-light fs-5 p-0 off" data-controller="search-item" data-action="search-item#update"
+        data-search-item-state-value="false">
+  <i class="fa-solid fa-magnifying-glass item-on"></i>
+  <i class="fa-solid fa-xmark item-off"></i>
+</button>
