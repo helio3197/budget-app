@@ -4,7 +4,12 @@ class CategoriesController < ApplicationController
 
   def index
     if user_signed_in?
-      @categories = current_user.categories.includes([icon_attachment: :blob])
+      @categories = if params[:search].present?
+                      current_user.categories.includes([icon_attachment: :blob]).where('name ~* ?', params[:search])
+                        .order created_at: :desc
+                    else
+                      current_user.categories.includes([icon_attachment: :blob]).order created_at: :desc
+                    end
     else
       render :home
     end

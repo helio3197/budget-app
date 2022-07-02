@@ -18,7 +18,7 @@
   <div class="field">
     <%= form.label :amount, class: 'd-none' %>
     <%= form.number_field :amount, autofocus: true, autocomplete: 'amount', class: 'form-control',
-                                   placeholder: 'Amount', min: 0 %>
+                                   placeholder: 'Amount', min: 0, step: '0.01' %>
   </div>
 
   <div class="mt-2 p-2 bg-light border border-gray-400 rounded">
