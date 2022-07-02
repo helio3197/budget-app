@@ -18,7 +18,8 @@ class OperationsController < ApplicationController
       redirect_to category_path(params[:category_id]), notice: 'Transaction created successfully.'
     else
       @current_category = Category.find(params[:category_id])
-      @others_categories = current_user.categories.includes([icon_attachment: :blob]).where.not(id: params[:category_id])
+      @others_categories = current_user.categories.includes([icon_attachment: :blob]).where
+        .not(id: params[:category_id])
       render :new, status: :unprocessable_entity
     end
   end
