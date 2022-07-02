@@ -21,7 +21,8 @@ RSpec.describe 'Categories list page', type: :system do
     expect(page).to have_link('SIGN UP')
   end
 
-  it 'I should see an empty categories list page if no category exists, the navbar with title "CATEGORIES", menu button, and a search button; and the "ADD CATEGORY" button' do
+  it 'I should see an empty categories list page if no category exists, the navbar with title "CATEGORIES", menu button
+  , and a search button; and the "ADD CATEGORY" button' do
     subject
 
     expect(page).to have_selector('button[data-controller="search-item"]')

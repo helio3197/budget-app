@@ -74,7 +74,8 @@ RSpec.describe 'Add operation page', type: :system do
     expect(page).to have_content('Name is too long')
   end
 
-  it 'Clicking the "Save" with valid data should redirect to the category transactions page with the new transaction added' do
+  it 'Clicking the "Save" with valid data should redirect to the category transactions page with the new
+   transaction added' do
     subject
 
     fill_in 'Name', with: 'Buy food'
