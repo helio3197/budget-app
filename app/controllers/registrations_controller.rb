@@ -23,4 +23,11 @@ class RegistrationsController < Devise::RegistrationsController
       respond_with resource
     end
   end
+
+  def destroy
+    super do
+      redirect_to root_path
+      return
+    end
+  end
 end
