@@ -1,0 +1,7 @@
+<li data-id=<%= category.id %>>
+  <button type="button" class="dropdown-item d-flex align-items-center gap-2" data-dropdown-picker-id-param=<%= category.id %>
+          data-action="dropdown-picker#pick">
+    <img src=<%= url_for category.icon %> class="icon-thumbnail dropdow-icon-thumbnail" alt="category item">
+    <p class="m-0 text-truncate"><%= category.name %></p>
+  </button>
+</li>

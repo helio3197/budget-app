@@ -1,0 +1,57 @@
+<% content_for :navbar do %>
+  <%= render 'header_new' %>
+<% end %>
+
+<section class="container-fluid">
+  <div class="container-sm py-3 px-0">
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'form mb-3' }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="field avatar mb-3" data-controller="avatar">
+        <div class="preview">
+          <%= image_tag 'profile-pic.png', data: { avatar_target: 'preview' }, alt: 'avatar' %>
+        </div>
+        <div class="image-upload">
+          <div class="file-picker">
+            <%= f.label :avatar, 'Upload picture' %>
+            <%= f.file_field :avatar, data: { action: 'change->avatar#update', avatar_target: 'picture' },
+                                      accept: 'image/jpeg, image/png, image/gif' %>
+          </div>
+          <div class="file-selection">
+            <small data-avatar-target="fileName">No file chosen...</small>
+            <button type="button" class="d-none" data-avatar-target="clearBtn" data-action="click->avatar#destroy">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="field mb-2">
+        <%= f.label :name, class: 'd-none' %>
+        <%= f.text_field :name, autofocus: true, autocomplete: "name", class: 'form-control', placeholder: 'Full name' %>
+      </div>
+
+      <div class="field mb-2">
+        <%= f.label :email, class: 'd-none' %>
+        <%= f.email_field :email, autocomplete: "email", class: 'form-control', placeholder: 'Email' %>
+      </div>
+
+      <div class="field mb-2">
+        <%= f.label :password, class: 'd-none' %>
+        <%= f.password_field :password, autocomplete: "new-password", class: 'form-control',
+                                        placeholder: "Password#{@minimum_password_length ? " (#{@minimum_password_length} characters minimum)" : ''}" %>
+      </div>
+
+      <div class="field mb-2">
+        <%= f.label :password_confirmation, class: 'd-none' %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control', placeholder: 'Password confirmation' %>
+      </div>
+
+    <% end %>
+
+    <div class="text-center">
+      <%= render "devise/shared/links" %>
+    </div>
+
+  </div>
+</section>

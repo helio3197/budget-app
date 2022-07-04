@@ -1,0 +1,63 @@
+@import "variables";
+
+.navbar-padding {
+  padding-top: 41.44px;
+}
+
+.navbar {
+  flex-wrap: nowrap;
+  min-height: 48px;
+
+  h1,
+  h2,
+  p {
+    margin: 0;
+    color: white;
+  }
+
+  h2 {
+    font-size: 1.325rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .back-btn {
+    color: white;
+    font-size: 1.5rem;
+    display: flex;
+    text-decoration: none;
+  }
+
+  .offcanvas {
+    max-width: 80%;
+    min-width: 220px;
+    background: $primary;
+
+    @media (max-width: 220px) {
+      max-width: 100%;
+      min-width: 150px;
+    }
+  }
+
+  ul > li {
+    border-bottom: 1px solid lightblue;
+  }
+
+  .avatar {
+    text-align: center;
+
+    .figure {
+      width: 35%;
+      min-width: 65px;
+      aspect-ratio: 1 / 1;
+      margin: 0;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}

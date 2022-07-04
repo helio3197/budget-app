@@ -1,0 +1,11 @@
+<li class="category-item">
+  <%= link_to '', class: 'd-flex w-100 text-decoration-none' do %>
+    <div class="px-2 d-flex flex-column overflow-hidden">
+      <p class="m-0 text-truncate"><%= operation.name %></p>
+      <small class="mt-auto text-gray-600"><%= operation.created_at.localtime.strftime "%b %d %Y at %l:%M %P" %> | Nº <%= operation.id %></small>
+    </div>
+    <div class="ms-auto">
+      <p>$<%= operation.amount %></p>
+    </div>
+  <% end %>
+</li>
