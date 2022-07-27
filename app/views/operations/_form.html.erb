@@ -1,6 +1,6 @@
 <%= form_with(model: operation, url: category_operations_path, class: 'form', id: 'new_operation') do |form| %>
   <% if operation.errors.any? %>
-    <div>
+    <div data-turbo-cache="false">
       <h2><%= pluralize(operation.errors.count, "error") %> prohibited this transaction from being saved:</h2>
       <ul>
         <% operation.errors.each do |error| %>
