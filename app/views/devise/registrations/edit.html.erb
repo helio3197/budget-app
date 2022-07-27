@@ -7,7 +7,7 @@
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'form' }) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
 
-      <div class="field avatar mb-3" data-controller="avatar">
+      <div class="field avatar mb-3" data-controller="avatar" data-avatar-placeholder-pic-value=<%= asset_path 'profile-pic.png' %>>
         <div class="preview">
           <% if current_user.avatar.present? %>
             <%= image_tag current_user.avatar, data: { avatar_target: 'preview' }, alt: 'avatar' %>
@@ -30,7 +30,6 @@
           <% if current_user.avatar.present? %>
             <button type="button" class="remove-avatar btn-to-link" data-avatar-target="removeAvatarBtn"
                     data-action="click->avatar#removeAvatar">Remove profile picture</button>
-            <span class="d-none" data-avatar-target="placeHolderPic"><%= asset_path 'profile-pic.png' %></span>
           <% end %>
         </div>
       </div>

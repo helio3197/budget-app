@@ -2,6 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ['preview', 'picture', 'fileName', 'clearBtn', 'placeHolderPic', 'removeAvatarBtn']
+  static values = { placeholderPic: String }
 
   connect() {
     this.defaultAvatar = this.previewTarget.src
@@ -15,11 +16,18 @@ export default class extends Controller {
       if (this.avatarRemoved) {
         document.getElementById('remove_avatar').remove()
       }
+      if (this.hasRemoveAvatarBtnTarget) {
+        this.removeAvatarBtnTarget.className = 'd-none'
+      }
     } else {
       this.previewTarget.src = this.defaultAvatar
       this.fileNameTarget.textContent = 'No file chosen...'
       this.clearBtnTarget.className = 'd-none'
-      if (this.avatarRemoved) {
+      if (this.hasRemoveAvatarBtnTarget) {
+        this.removeAvatarBtnTarget.className = 'remove-avatar btn-to-link'
+      }
+      this.avatarRemoved = false
+      if (this.avatarRemoved && this.previewTarget.src === this.placeholderPicValue) {
         this.removeAvatar()
       }
     }
@@ -31,7 +39,7 @@ export default class extends Controller {
   }
 
   removeAvatar() {
-    this.previewTarget.src = this.placeHolderPicTarget.textContent
+    this.previewTarget.src = this.placeholderPicValue
     this.removeAvatarBtnTarget.className = 'd-none'
     const removeAvatarInput = document.createElement('input')
     removeAvatarInput.type = 'hidden'
