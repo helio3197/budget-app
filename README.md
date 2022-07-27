@@ -43,6 +43,10 @@ To get a local copy up and running follow these simple steps.
 ```
 $ git clone git@github.com:helio3197/budget-app.git
 ```
+- Navigate to the repo folder:
+```
+$ cd budget-app
+```
 - Install the required dependencies:
 ```
 $ bundle install
