@@ -1,0 +1,16 @@
+.home {
+  .btn {
+    width: 100%;
+    max-width: 350px;
+
+    @media (min-width: 576px) {
+      width: 250px;
+      max-width: none;
+    }
+  }
+
+  .action-btns {
+    column-gap: 0.5rem;
+    row-gap: 0.3rem;
+  }
+}

@@ -1,0 +1,12 @@
+<li class="category-item">
+  <%= link_to category_path(category), class: 'd-flex w-100 text-decoration-none' do %>
+    <%= image_tag category.icon, alt: 'icon', class: 'category-item-icon flex-shrink-0' %>
+    <div class="px-2 d-flex flex-column overflow-hidden">
+      <p class="mt-2 mb-0 text-truncate"><%= category.name %></p>
+      <small class="mt-auto"><%= category.created_at.strftime "%m-%d-%Y" %></small>
+    </div>
+    <div class="ms-auto">
+      <p>$<%= category.operations.sum :amount %></p>
+    </div>
+  <% end %>
+</li>

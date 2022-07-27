@@ -1,0 +1,8 @@
+<li style="display: flex" class="list-group-item align-items-center gap-2" hidden data-controller="selected-item" data-action="dropdown-picker:select@window->selected-item#select"
+    data-selected-item-id-value=<%= selected_category.id %>>
+  <img src=<%= url_for selected_category.icon %> class="icon-thumbnail dropdow-icon-thumbnail" alt="selected category">
+  <p class="m-0 text-truncate"><%= selected_category.name %></p>
+  <button type="button" data-action="selected-item#remove" class="ms-auto btn btn-link">
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+</li>
