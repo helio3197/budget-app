@@ -10,30 +10,34 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="d-flex flex-column <%= 'navbar-padding' unless !user_signed_in? && current_page?(root_path) %>">
-    <% if content_for? :navbar %>
-      <nav class="container-fluid navbar navbar-dark bg-primary fixed-top">
-        <div class="container-sm d-flex p-0">
-          <%= yield :navbar %>
+  <body class="d-flex <%= 'navbar-padding' unless !user_signed_in? && current_page?(root_path) %>">
+    <% if user_signed_in? %>
+      <%= render 'navigation/sidebar' %>
+    <% end %>
+    
+    <div class="flex-grow-1">
+      <% if content_for? :navbar %>
+        <nav class="container-fluid navbar navbar-dark bg-primary fixed-top navbar-expand-lg">
+          <div class="container-sm d-flex p-0">
+            <%= yield :navbar %>
+          </div>
+        </nav>
+      <% end %>
+      <% if notice %>
+        <div data-turbo-cache="false" class="alert alert-secondary alert-dismissible fade show mt-2 mb-0"role="alert">
+          <strong><%= notice %></strong>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-      </nav>
-    <% end %>
+      <% end %>
 
-    <% if notice %>
-      <div data-turbo-cache="false" class="alert alert-secondary alert-dismissible fade show mt-2 mb-0"role="alert">
-        <strong><%= notice %></strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-    <% end %>
+      <% if alert %>
+        <div data-turbo-cache="false" class="alert alert-secondary alert-dismissible fade show mt-2 mb-0"role="alert">
+          <strong><%= alert %></strong>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% end %>
 
-    <% if alert %>
-      <div data-turbo-cache="false" class="alert alert-secondary alert-dismissible fade show mt-2 mb-0"role="alert">
-        <strong><%= alert %></strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-    <% end %>
-
-    <%= yield %>
-
+      <%= yield %>
+    </div>
   </body>
 </html>
