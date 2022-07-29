@@ -10,14 +10,14 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="d-flex <%= 'navbar-padding' unless !user_signed_in? && current_page?(root_path) %>">
+  <body class="d-flex">
     <% if user_signed_in? %>
       <%= render 'navigation/sidebar' %>
     <% end %>
     
-    <div class="flex-grow-1">
+    <div class="flex-grow-1 d-flex flex-column">
       <% if content_for? :navbar %>
-        <nav class="container-fluid navbar navbar-dark bg-primary fixed-top navbar-expand-lg">
+        <nav class="container-fluid navbar navbar-dark bg-primary navbar-expand-lg">
           <div class="container-sm d-flex p-0">
             <%= yield :navbar %>
           </div>
@@ -29,7 +29,6 @@
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
       <% end %>
-
       <% if alert %>
         <div data-turbo-cache="false" class="alert alert-secondary alert-dismissible fade show mt-2 mb-0"role="alert">
           <strong><%= alert %></strong>

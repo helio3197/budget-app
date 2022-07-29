@@ -4,6 +4,14 @@
   padding-top: 41.44px;
 }
 
+.sidebar {
+  @media (min-width: 992px) {
+    width: 25%;
+    max-width: 370px;
+    min-width: 270px;
+  }
+}
+
 .navbar {
   flex-wrap: nowrap;
   min-height: 48px;
@@ -29,7 +37,7 @@
     text-decoration: none;
   }
 
-  .offcanvas {
+  .offcanvas-lg {
     max-width: 80%;
     min-width: 220px;
     background: $primary;
