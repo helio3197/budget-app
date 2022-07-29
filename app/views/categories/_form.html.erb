@@ -1,6 +1,6 @@
 <%= form_with(model: category, url: categories_path, class: 'form', id: 'new_category') do |form| %>
   <% if category.errors.any? %>
-    <div>
+    <div data-turbo-cache="false">
       <h2><%= pluralize(category.errors.count, "error") %> prohibited this category from being saved:</h2>
       <ul>
         <% category.errors.each do |error| %>

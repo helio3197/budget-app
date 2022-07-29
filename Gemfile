@@ -35,7 +35,7 @@ gem 'file_validators'
 
 gem 'bullet', group: 'development'
 
-gem 'bootstrap'
+gem 'bootstrap', '~> 5.2.0'
 
 gem 'font-awesome-sass'
 

@@ -4,6 +4,14 @@
   padding-top: 41.44px;
 }
 
+.sidebar {
+  @media (min-width: 992px) {
+    width: 25%;
+    max-width: 370px;
+    min-width: 270px;
+  }
+}
+
 .navbar {
   flex-wrap: nowrap;
   min-height: 48px;
@@ -29,7 +37,7 @@
     text-decoration: none;
   }
 
-  .offcanvas {
+  .offcanvas-lg {
     max-width: 80%;
     min-width: 220px;
     background: $primary;
@@ -37,6 +45,49 @@
     @media (max-width: 220px) {
       max-width: 100%;
       min-width: 150px;
+    }
+
+    @media (min-width: 992px) {
+      height: 100%;
+      max-width: 100%;
+      width: 100%;
+      padding: 0 1rem;
+
+      .offcanvas-header {
+        display: block;
+        padding: 0;
+        margin-bottom: 1rem;
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        button {
+          display: none;
+        }
+      }
+
+      .offcanvas-body,
+      & .navbar-nav {
+        flex-direction: column;
+      }
+
+      .avatar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1rem;
+        justify-content: center;
+
+        .figure {
+          max-width: 83px;
+        }
+
+        p {
+          flex-grow: 1;
+          text-align: left;
+        }
+      }
     }
   }
 
@@ -59,5 +110,13 @@
       height: 100%;
       object-fit: cover;
     }
+
+    p {
+      font-size: 1.5rem;
+    }
   }
+}
+
+.flex-wrapped {
+  text-align: center !important;
 }

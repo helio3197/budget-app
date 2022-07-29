@@ -1,34 +1,7 @@
 <button class="navbar-toggler p-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
   <span class="navbar-toggler-icon"></span>
 </button>
-<div class="offcanvas offcanvas-start" data-controller="slide-menu" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-  <div class="offcanvas-header">
-    <h1 class="offcanvas-title text-light" id="offcanvasNavbarLabel">MyBudgetApp</h1>
-    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-  </div>
-  <div class="offcanvas-body pt-0">
-    <div class="avatar mb-2">
-      <figure class="figure rounded-circle border overflow-hidden">
-        <% if current_user.avatar.present? %>
-          <%= image_tag current_user.avatar, alt: 'avatar' %>
-        <% else  %>
-          <%= image_tag 'profile-pic.png', alt: 'avatar' %>
-        <% end %>
-      </figure>
-      <p class="fs-5"><%= current_user.name %></p>
-    </div>
-    <ul class="navbar-nav justify-content-end flex-grow-1 fs-5">
-      <li class="nav-item">
-        <%= link_to 'Account settings', edit_user_registration_path, class: 'nav-link', aria: { current: 'page' } %>
-      </li>
-      <li class="nav-item">
-        <%= link_to 'Sign out', destroy_user_session_path, class: 'nav-link', aria: { current: 'page' },
-                                                           data: { turbo_method: 'delete' }, status: :see_other %>
-      </li>
-    </ul>
-  </div>
-</div>
-<h2>CATEGORIES</h2>
+<h2 class="mx-lg-auto">CATEGORIES</h2>
 <button type="button" class="action-btn btn btn-link text-light fs-5 p-0 off" data-controller="search-item" data-action="search-item#update"
         data-search-item-state-value="false">
   <i class="fa-solid fa-magnifying-glass item-on"></i>
