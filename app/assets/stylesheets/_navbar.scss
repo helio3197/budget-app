@@ -46,6 +46,49 @@
       max-width: 100%;
       min-width: 150px;
     }
+
+    @media (min-width: 992px) {
+      height: 100%;
+      max-width: 100%;
+      width: 100%;
+      padding: 0 1rem;
+
+      .offcanvas-header {
+        display: block;
+        padding: 0;
+        margin-bottom: 1rem;
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        button {
+          display: none;
+        }
+      }
+
+      .offcanvas-body,
+      & .navbar-nav {
+        flex-direction: column;
+      }
+
+      .avatar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1rem;
+        justify-content: center;
+
+        .figure {
+          max-width: 83px;
+        }
+
+        p {
+          flex-grow: 1;
+          text-align: left;
+        }
+      }
+    }
   }
 
   ul > li {
@@ -67,5 +110,13 @@
       height: 100%;
       object-fit: cover;
     }
+
+    p {
+      font-size: 1.5rem;
+    }
   }
+}
+
+.flex-wrapped {
+  text-align: center !important;
 }

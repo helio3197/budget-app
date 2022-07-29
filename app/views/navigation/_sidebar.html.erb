@@ -2,10 +2,10 @@
   <div class="offcanvas-lg offcanvas-start" data-controller="slide-menu" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
     <div class="offcanvas-header">
       <h1 class="offcanvas-title text-light" id="offcanvasNavbarLabel">MyBudgetApp</h1>
-      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" data-bs-target="#offcanvasNavbar" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body pt-0">
-      <div class="avatar mb-2">
+      <div class="avatar mb-2" data-controller="flex-wrapped-helper" data-flex-wrapped-helper-minwidth-value="992" data-flex-wrapped-helper-triggered-class="flex-wrapped">
         <figure class="figure rounded-circle border overflow-hidden">
           <% if current_user.avatar.present? %>
             <%= image_tag current_user.avatar, alt: 'avatar' %>
@@ -13,7 +13,7 @@
             <%= image_tag 'profile-pic.png', alt: 'avatar' %>
           <% end %>
         </figure>
-        <p class="fs-5"><%= current_user.name %></p>
+        <p data-flex-wrapped-helper-target="element"><%= current_user.name %></p>
       </div>
       <ul class="navbar-nav justify-content-end flex-grow-1 fs-5">
         <li class="nav-item">
