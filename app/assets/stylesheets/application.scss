@@ -42,12 +42,13 @@ body {
 }
 
 .icon-thumbnail {
-  width: 25%;
+  width: 20%;
   border: 1px solid lightgray;
   border-radius: 0.25rem;
-  max-width: 90px;
-  min-width: 68px;
+  max-width: 50px;
+  min-width: 46px;
   aspect-ratio: 1 / 1;
+  object-fit: cover;
 }
 
 .dropdow-icon-thumbnail {
