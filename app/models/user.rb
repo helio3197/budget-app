@@ -12,4 +12,12 @@ class User < ApplicationRecord
 
   validates :avatar, file_size: { less_than_or_equal_to: 1.megabytes },
                      file_content_type: { allow: ['image/jpeg', 'image/png', 'image/gif'] }
+
+  after_create :create_budget_cat
+
+  private
+
+  def create_budget_cat
+    categories.new(name: 'personal_budget').save(validate: false)
+  end
 end
