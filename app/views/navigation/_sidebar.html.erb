@@ -1,7 +1,9 @@
 <nav class="navbar navbar-dark bg-primary navbar-expand-lg sidebar">
   <div class="offcanvas-lg offcanvas-start" data-controller="slide-menu" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
     <div class="offcanvas-header">
-      <h1 class="offcanvas-title text-light" id="offcanvasNavbarLabel">MyBudgetApp</h1>
+      <h1 class="offcanvas-title text-light" id="offcanvasNavbarLabel">
+        <%= link_to 'MyBudgetApp', root_path, class: 'text-reset text-decoration-none' %>
+      </h1>
       <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" data-bs-target="#offcanvasNavbar" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body pt-0">
