@@ -29,6 +29,6 @@ class OperationsController < ApplicationController
   private
 
   def operation_params
-    params.require(:operation).permit :name, :amount, :categories
+    params.require(:operation).permit :name, :amount, :categories, :description
   end
 end
