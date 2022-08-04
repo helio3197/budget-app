@@ -1,7 +1,7 @@
 <%= form_with(model: operation, url: category_operations_path, class: 'form', id: 'new_operation') do |form| %>
   <% if operation.errors.any? %>
     <div data-turbo-cache="false">
-      <h2><%= pluralize(operation.errors.count, "error") %> prohibited this transaction from being saved:</h2>
+      <h2><%= pluralize(operation.errors.count, "error") %> prohibited this transaction from being processed:</h2>
       <ul>
         <% operation.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -15,11 +15,23 @@
     <%= form.text_field :name, autofocus: true, autocomplete: 'name', class: 'form-control', placeholder: 'Name' %>
   </div>
 
-  <div class="field input-group">
+  <div class="field input-group mb-2">
     <span class="input-group-text">$</span>
     <%= form.label :amount, class: 'd-none' %>
-    <%= form.number_field :amount, autofocus: true, autocomplete: 'amount', class: 'form-control',
-                                   placeholder: 'Amount', min: 0, step: '0.01' %>
+    <input
+      id="operation_amount"
+      class="form-control"
+      name="operation[amount]"
+      placeholder="Amount"
+      min="0"
+      step="0.01"
+      value=<%= operation.amount_before_type_cast %>
+    >
+  </div>
+
+  <div class="field">
+    <%= form.label :description, class: 'd-none' %>
+    <%= form.text_area :description, class: 'form-control', placeholder: 'Description (optional)' %>
   </div>
 
   <div class="mt-2 p-2 bg-light border border-gray-400 rounded">
