@@ -1,0 +1,36 @@
+<%= form_with(model: user, url: request.path, class: 'form', id: 'new_operation') do |form| %>
+  <% if user.errors.any? %>
+    <div data-turbo-cache="false">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this transaction from being processed:</h2>
+      <ul>
+        <% user.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field input-group">
+    <span class="input-group-text">$</span>
+    <%= form.label :balance, class: 'd-none' %>
+    <input
+      id="user_balance"
+      class="form-control"
+      name="operation[amount]"
+      placeholder="Amount"
+      min="0"
+      step="0.01"
+      value=<%= user.balance_before_type_cast %>
+      autofocus
+    >
+  </div>
+  <div class="form-text mb-2">Enter the amount of money you want to deposit.</div>
+
+  <div class="field mb-2">
+    <%= form.label :description, class: 'd-none' %>
+    <%= form.text_area :description, class: 'form-control', placeholder: 'Description (optional)' %>
+    <div class="form-text">Add a an optional description to this transaction.</div>
+  </div>
+
+  <button class="btn btn-success px-3">Deposit <i class="fa-solid fa-arrow-up-from-bracket ms-1"></i></button>
+<% end %>

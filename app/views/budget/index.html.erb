@@ -7,11 +7,11 @@
     <div class="container-sm py-2 d-flex justify-content-between align-items-center">
       <p class="m-0">Current Balance: <span class="fw-bold">$<%= current_user.balance %></span></p>
       <div class="d-flex gap-3">
-        <%= link_to '#', class: 'btn btn-sm btn-success', title: 'Deposit' do %>
+        <%= link_to my_budget_deposit_path, class: 'btn btn-sm btn-success', title: 'Deposit' do %>
           <i class="fa-solid fa-arrow-up-from-bracket"></i>
           <span class="d-none d-sm-inline">Deposit</span>
         <% end %>
-        <%= link_to '#', class: 'btn btn-sm btn-danger', title: 'Withdraw' do %>
+        <%= link_to my_budget_withdraw_path, class: 'btn btn-sm btn-danger', title: 'Withdraw' do %>
           <i class="fa-solid fa-arrow-up-from-bracket" style="transform: rotate(180deg)"></i>
           <span class="d-none d-sm-inline">Withdraw</span>
         <% end %>
