@@ -1,0 +1,10 @@
+<%= link_to my_budget_path, class: 'back-btn' do %>
+  <i class="fa-solid fa-arrow-left"></i>
+<% end %>
+<h2 class="mx-auto">
+  <% if current_path? '/my_budget/deposit' %>
+    DEPOSIT MONEY
+  <% else %>
+    WITHDRAW MONEY
+  <% end %>
+</h2>

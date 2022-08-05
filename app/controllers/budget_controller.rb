@@ -3,7 +3,7 @@ class BudgetController < ApplicationController
   end
 
   def new_deposit
-    @operation = Operation.new
+    render_new_transaction
   end
 
   def exec_deposit
@@ -13,12 +13,13 @@ class BudgetController < ApplicationController
       @operation.save!
       current_user.update! balance: current_user.balance + operation_params[:amount].to_f
     rescue ActiveRecord::RecordInvalid
-      render :new_deposit, status: :unprocessable_entity and return
+      render :new_transaction, status: :unprocessable_entity and return
     end
     redirect_to my_budget_path, notice: 'Deposit successful!'
   end
 
   def new_withdraw
+    render_new_transaction
   end
 
   def exec_withdraw
@@ -28,6 +29,11 @@ class BudgetController < ApplicationController
 
   def balance_operation(name)
     Operation.new(**operation_params, name:, categories: [current_user.categories.first], user: current_user)
+  end
+
+  def render_new_transaction
+    @operation = Operation.new
+    render 'new_transaction'
   end
 
   def operation_params

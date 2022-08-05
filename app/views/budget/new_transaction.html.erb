@@ -1,0 +1,14 @@
+<% content_for :navbar do %>
+  <%= render 'header_transaction' %>
+<% end %>
+
+<section>
+  <div class="container-fluid bg-light">
+    <div class="container-sm py-2 d-flex justify-content-between align-items-center">
+      <p class="m-0">Current balance: <span class="fw-bold">$<%= current_user.balance %></span></p>
+    </div>
+  </div>
+  <div class="container-sm py-3">
+    <%= render 'form', operation: @operation %>
+  </div>
+</section>
