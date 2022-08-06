@@ -1,5 +1,10 @@
 class BudgetController < ApplicationController
   def index
+    @total_expenses = current_user.operations.where
+      .not(id: current_user.categories.joins(:categories_operations).where(name: 'personal_budget')
+                 .pluck(:operation_id)).sum(:amount)
+    @total_deposits = current_user.operations.where(name: 'Deposit').sum(:amount)
+    @total_withdrawals = current_user.operations.where(name: 'Withdraw').sum(:amount)
   end
 
   def new_deposit
