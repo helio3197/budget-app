@@ -7,15 +7,20 @@ class BudgetController < ApplicationController
   end
 
   def exec_deposit
+    @user = current_user
     @operation = balance_operation 'Deposit'
+    operation_amount = operation_params[:amount]
 
     @operation.transaction do
       @operation.save!
-      current_user.update! balance: current_user.balance + operation_params[:amount].to_f
-    rescue ActiveRecord::RecordInvalid
-      render :new_transaction, status: :unprocessable_entity and return
+      @user.update! balance: @user.balance + operation_params[:amount].to_f
+      raise ActiveRecord::RecordInvalid if amount_negative? operation_amount
     end
-    redirect_to my_budget_path, notice: 'Deposit successful!'
+    redirect_to my_budget_path, notice: 'Deposit processed successfully!'
+  rescue ActiveRecord::RecordInvalid
+    current_user.balance = @user.balance_was
+    @operation.invalidate_negative_amount if amount_negative? operation_amount
+    render :new_transaction, status: :unprocessable_entity
   end
 
   def new_withdraw
@@ -23,12 +28,30 @@ class BudgetController < ApplicationController
   end
 
   def exec_withdraw
+    @user = current_user
+    @operation = balance_operation 'Withdraw'
+    operation_amount = operation_params[:amount].to_f
+
+    @operation.transaction do
+      @operation.save!
+      raise ActiveRecord::RecordInvalid if operation_amount > @user.balance || amount_negative?(operation_amount)
+
+      @user.update! balance: @user.balance - operation_amount
+    end
+    redirect_to my_budget_path, notice: 'Withdrawal processed successfully!'
+  rescue ActiveRecord::RecordInvalid
+    current_user.balance = @user.balance_was
+    @operation.invalidate_user_balance if operation_amount > @user.balance
+    @operation.invalidate_negative_amount if amount_negative? operation_amount
+    render :new_transaction, status: :unprocessable_entity and return
   end
 
   private
 
   def balance_operation(name)
-    Operation.new(**operation_params, name:, categories: [current_user.categories.first], user: current_user)
+    o = Operation.new(**operation_params, name:, categories: [@user.categories.first], user: @user)
+    o.amount = -o.amount if name == 'Withdraw' && o.amount
+    o
   end
 
   def render_new_transaction

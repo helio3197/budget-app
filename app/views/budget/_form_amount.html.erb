@@ -13,6 +13,7 @@
         value=<%= operation.amount_before_type_cast %>
       <% end %>
       autofocus
+      type="number"
     >
   </div>
   <div class="form-text mb-2">Enter the amount of money you want to deposit.</div>
@@ -28,9 +29,11 @@
       min="0"
       step="0.01"
       <% if operation.amount_before_type_cast && operation.amount_before_type_cast != '' %>
-        value=<%= operation.amount_before_type_cast %>
+        value=<%= operation.amount_before_type_cast.abs %>
       <% end %>
       autofocus
+      type="number"
+      <%= 'disabled' if unavailable_balance? %>
     >
   </div>
   <div class="form-text mb-2">Enter the amount of money you want to withdraw.</div>

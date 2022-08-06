@@ -37,8 +37,4 @@ class OperationsController < ApplicationController
   def operation_params
     params.require(:operation).permit :name, :amount, :categories, :description
   end
-
-  def amount_negative?(value)
-    value&.to_f&.negative?
-  end
 end
