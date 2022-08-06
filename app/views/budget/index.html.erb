@@ -2,10 +2,37 @@
   <%= render 'header_index' %>
 <% end %>
 
-<section class="d-flex flex-column h-100 pb-3 overflow-hidden">
+<section class="d-flex flex-column h-100 pb-3 overflow-auto">
   <%= render 'components/balance_bar' %>
-  <div class="container-fluid">
-    text
+  <div class="container-fluid py-2">
+    <div class="container-sm category-item flex-column">
+      <h3 class="mb-2">Account metrics:</h3>
+      <div class="container-fluid">
+        <ul class="row row-cols-1 row-cols-sm-3 list-group list-group-horizontal list-unstyled">
+          <li class="col gx-3 py-1">
+            <div class="list-group-item list-group-item-success">
+              <p class="mb-2 text-center">Total deposited</p>
+              <p class="m-0 text-center">$<%= @total_deposits.to_f %></p>
+            </div>
+          </li>
+          <li class="col gx-3 py-1">
+            <div class="list-group-item list-group-item-warning">
+              <p class="mb-2 text-center">Total expended</p>
+              <p class="m-0 text-center">$<%= @total_expenses.to_f %></p>
+            </div>
+          </li>
+          <li class="col gx-3 py-1">
+            <div class="list-group-item list-group-item-danger">
+              <p class="mb-2 text-center">Total withdrawn</p>
+              <p class="m-0 text-center">$<%= @total_withdrawals.to_f.abs %></p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <%= debug @total_expenses.to_f %>
+    <%= debug @total_deposits.to_f %>
+    <%= debug @total_withdrawals.to_f %>
   </div>
   
 </section>

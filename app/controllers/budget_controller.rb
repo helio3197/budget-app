@@ -1,4 +1,6 @@
 class BudgetController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     @total_expenses = current_user.operations.where
       .not(id: current_user.categories.joins(:categories_operations).where(name: 'personal_budget')

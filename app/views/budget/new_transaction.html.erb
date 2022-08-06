@@ -2,7 +2,7 @@
   <%= render 'header_transaction' %>
 <% end %>
 
-<section>
+<section class="overflow-auto">
   <%= render 'components/balance_bar' %>
   <% if unavailable_balance? && current_path?('/my_budget/withdraw') %>
     <div data-turbo-cache="false" class="alert alert-danger py-2 fade show m-0" role="alert">
