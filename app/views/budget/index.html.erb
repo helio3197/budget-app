@@ -3,21 +3,7 @@
 <% end %>
 
 <section class="d-flex flex-column h-100 pb-3 overflow-hidden">
-  <div class="container-fluid bg-light">
-    <div class="container-sm py-1 d-flex justify-content-between align-items-center">
-      <p class="m-0">Balance: <span class="fw-bold">$<%= current_user.balance %></span></p>
-      <div class="d-flex gap-3">
-        <%= link_to my_budget_deposit_path, class: 'btn btn-sm btn-success', title: 'Deposit' do %>
-          <i class="fa-solid fa-arrow-up-from-bracket"></i>
-          <span class="d-none d-sm-inline">Deposit</span>
-        <% end %>
-        <%= link_to my_budget_withdraw_path, class: 'btn btn-sm btn-danger', title: 'Withdraw' do %>
-          <i class="fa-solid fa-arrow-up-from-bracket" style="transform: rotate(180deg)"></i>
-          <span class="d-none d-sm-inline">Withdraw</span>
-        <% end %>
-      </div>
-    </div>
-  </div>
+  <%= render 'components/balance_bar' %>
   <div class="container-fluid">
     text
   </div>

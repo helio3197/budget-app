@@ -35,6 +35,14 @@
       type="number"
       <%= 'disabled' if unavailable_balance? %>
     >
+    <button
+      class="btn btn-outline-secondary"
+      type="button"
+      onclick="document.getElementById('operation_amount').value = <%= current_user.balance %>"
+      <%= 'disabled' if unavailable_balance? %>
+    >
+      Max
+    </button>
   </div>
   <div class="form-text mb-2">Enter the amount of money you want to withdraw.</div>
 <% end %>
