@@ -50,7 +50,8 @@ class BudgetController < ApplicationController
 
   def balance_operation(name)
     o = Operation.new(**operation_params, name:, categories: [@user.categories.first], user: @user)
-    o.amount = -o.amount if name == 'Withdraw' && o.amount
+    o.amount = o.amount.to_f
+    o.amount = -o.amount if name == 'Withdraw'
     o
   end
 
