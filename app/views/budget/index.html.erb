@@ -30,7 +30,7 @@
         </ul>
       </div>
       <h4 class="text-decoration-underline">Expenses by categories</h4>
-      <div data-turbo-cache="false" class="position-relative">
+      <div data-turbo-cache="false" class="position-relative mb-3">
         <%= bar_chart bar_chart_data, bar_chart_options %>
         <% if @categories_expenses.empty? %>
           <div
@@ -41,10 +41,20 @@
           </div>
         <% end %>
       </div>
+      <h4 class="text-decoration-underline">Last week's operations</h4>
+      <div data-turbo-cache="false" class="position-relative">
+        <%= line_chart line_chart_data, line_chart_options %>
+        <% if @categories_expenses.empty? %>
+          <div
+            class="position-absolute text-center top-0 bottom-0 start-0 end-0 d-flex align-items-center justify-content-center"
+            style="background: #7a848e38;"
+          >
+            There are no metrics available at this moment.
+          </div>
+        <% end %>
+      </div>
     </div>
-    <%= debug @total_expenses.to_f %>
-    <%= debug @total_deposits.to_f %>
-    <%= debug @total_withdrawals.to_f %>
+    <%= debug @last_days_ops %>
     <%= debug @categories_expenses %>
   </div>
   

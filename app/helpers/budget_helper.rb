@@ -70,4 +70,56 @@ module BudgetHelper
       }
     }
   end
+
+  def line_chart_data
+    {
+      labels: @last_days_ops.map { |item| item[:date] },
+      datasets: [
+        {
+          label: 'Daily expenses',
+          data: @last_days_ops.map { |item| item[:total] },
+          background_color: [
+            'rgba(54, 162, 235, 0.5)'
+          ],
+          border_color: [
+            'rgb(54, 162, 235)'
+          ],
+          border_width: 1
+        }
+      ]
+    }
+  end
+
+  def line_chart_options
+    {
+      aspect_ratio: 1.5,
+      scales: {
+        y: {
+          ticks: {
+            callback: 'function(value) {
+              return `$${value}`;
+            }'
+          },
+          begin_at_zero: true,
+        }
+      },
+      plugins: {
+        title: {
+          text: 'Expenses x Day',
+          display: true
+        },
+        tooltip: {
+          callbacks: {
+            label: 'function(context) {
+              return `${context.dataset.label}: $${context.parsed.y}`
+            }'
+          }
+        }
+      },
+      interaction: {
+        intersect: false,
+        mode: 'index'
+      }
+    }
+  end
 end

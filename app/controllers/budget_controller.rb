@@ -2,9 +2,10 @@ class BudgetController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @total_expenses = current_user.operations.where
+    @user_ops_without_balance_ops = current_user.operations.where
       .not(id: current_user.categories.joins(:categories_operations).where(name: 'personal_budget')
-                 .pluck(:operation_id)).sum(:amount)
+                .pluck(:operation_id))
+    @total_expenses = @user_ops_without_balance_ops.sum(:amount)
     @total_deposits = current_user.operations.where(name: 'Deposit').sum(:amount)
     @total_withdrawals = current_user.operations.where(name: 'Withdraw').sum(:amount)
     @categories_expenses = current_user.categories.where.not(name: 'personal_budget').map do |c|
@@ -14,6 +15,7 @@ class BudgetController < ApplicationController
       }
     end
     @categories_expenses = order_chart_data @categories_expenses
+    @last_days_ops = last_days_expenses
   end
 
   def new_deposit
@@ -87,5 +89,26 @@ class BudgetController < ApplicationController
       }
     end
     list.first 4
+  end
+
+  def last_days_expenses(days_amount = 7)
+    days_amount -= 1
+    days_ops = @user_ops_without_balance_ops.where(created_at: (Time.now.midnight - days_amount.days)..Time.now)
+      .select('SUM(amount) AS total, CAST(created_at AS date)').group('CAST(created_at AS date)')
+    i = 0
+    ((Date.today - days_amount.days)..Date.today).map do |d|
+      if d.day == days_ops[i]&.created_at&.day
+        i += 1
+        {
+          date: d.to_s,
+          total: days_ops[i - 1].total.to_f.abs
+        }
+      else
+        {
+          date: d.to_s,
+          total: 0
+        }
+      end
+    end
   end
 end
