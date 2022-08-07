@@ -7,6 +7,13 @@ class BudgetController < ApplicationController
                  .pluck(:operation_id)).sum(:amount)
     @total_deposits = current_user.operations.where(name: 'Deposit').sum(:amount)
     @total_withdrawals = current_user.operations.where(name: 'Withdraw').sum(:amount)
+    @categories_expenses = current_user.categories.where.not(name: 'personal_budget').map do |c|
+      {
+        name: c.name,
+        total: c.operations.sum(:amount).to_f.abs
+      }
+    end
+    @categories_expenses = order_chart_data @categories_expenses
   end
 
   def new_deposit
@@ -69,5 +76,16 @@ class BudgetController < ApplicationController
 
   def operation_params
     params.require(:operation).permit(:amount, :description)
+  end
+
+  def order_chart_data(list)
+    list = list.sort { |a, b| b[:total] <=> a[:total] }
+    if list.length > 4
+      list[3] = {
+        name: 'Others',
+        total: list[3..].reduce(0) { |total, item| total + item[:total] }
+      }
+    end
+    list.first 4
   end
 end

@@ -5,11 +5,11 @@ module BudgetHelper
 
   def bar_chart_data
     {
-      labels: %w[first second third four],
+      labels: @categories_expenses.map { |item| item[:name] },
       datasets: [
         {
           label: 'Expenses',
-          data: [65, 59, 80.56, 81],
+          data: @categories_expenses.map { |item| item[:total] },
           background_color: [
             'rgba(255, 99, 132, 0.3)',
             'rgba(255, 159, 64, 0.3)',
