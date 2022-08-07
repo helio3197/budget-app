@@ -83,7 +83,7 @@ class BudgetController < ApplicationController
     if list.length > 4
       list[3] = {
         name: 'Others',
-        total: list[3..].reduce(0) { |total, item| total + item[:total] }
+        total: list[3..].reduce(0) { |total, item| total + item[:total] }.truncate(2)
       }
     end
     list.first 4

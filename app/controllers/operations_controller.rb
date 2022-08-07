@@ -15,11 +15,13 @@ class OperationsController < ApplicationController
 
     @operation.transaction do
       @operation.save!
+      current_user.update! balance: current_user.balance - operation_amount
       raise ActiveRecord::RecordInvalid if operation_amount > @user.balance || amount_negative?(operation_amount)
     end
 
     redirect_to category_path(params[:category_id]), notice: 'Transaction created successfully.'
   rescue ActiveRecord::RecordInvalid
+    current_user.balance = current_user.balance_was
     @operation.invalidate_negative_amount if amount_negative? operation_amount
     @operation.invalidate_user_balance if operation_amount > @user.balance
     @current_category = Category.find(params[:category_id])
