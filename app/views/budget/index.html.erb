@@ -7,7 +7,7 @@
   <div class="container-fluid py-2">
     <div class="container-sm category-item flex-column">
       <h3 class="mb-2">Account metrics:</h3>
-      <div class="container-fluid">
+      <div class="container-fluid mb-2">
         <ul class="row row-cols-1 row-cols-sm-3 list-group list-group-horizontal list-unstyled">
           <li class="col gx-3 py-1">
             <div class="list-group-item list-group-item-success">
@@ -28,6 +28,10 @@
             </div>
           </li>
         </ul>
+      </div>
+      <h4 class="text-decoration-underline">Expenses by categories</h4>
+      <div data-turbo-cache="false">
+        <%= bar_chart bar_chart_data, bar_chart_options %>
       </div>
     </div>
     <%= debug @total_expenses.to_f %>
