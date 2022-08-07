@@ -20,5 +20,13 @@
         <% end %>
       </div>
     <% end %>
+    <% unless request.path.match?(/\A\/my_budget(?:\/.+)?\z/) %>
+      <div>
+        <%= link_to my_budget_path, class: 'text-decoration-none' do %>
+          <i class="fa-solid fa-chart-simple"></i>
+          details
+        <% end %>
+      </div>
+    <% end %>
   </div>
 </div>
