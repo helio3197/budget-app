@@ -30,8 +30,16 @@
         </ul>
       </div>
       <h4 class="text-decoration-underline">Expenses by categories</h4>
-      <div data-turbo-cache="false">
+      <div data-turbo-cache="false" class="position-relative">
         <%= bar_chart bar_chart_data, bar_chart_options %>
+        <% if @categories_expenses.empty? %>
+          <div
+            class="position-absolute text-center top-0 bottom-0 start-0 end-0 d-flex align-items-center justify-content-center"
+            style="background: #7a848e38;"
+          >
+            There are no metrics available at this moment.
+          </div>
+        <% end %>
       </div>
     </div>
     <%= debug @total_expenses.to_f %>
