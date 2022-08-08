@@ -64,5 +64,28 @@
       </turbo-frame>
     </div>
   </div>
-  
+  <div class="container-fluid bg-light py-2">
+    <div class="container-sm">
+      <h3 class="m-0 fs-4">Transaction history</h3>
+    </div>
+  </div>
+  <% if @user_budget_ops.empty? %>
+    <p class="text-center mt-3">There are no transactions yet.</p>
+  <% else %>
+    <div class="container-fluid">
+      <div class="container-sm pt-2">
+        <ul class="categories-list gap-1">
+          <turbo-frame id="page-<%= params[:page] %>">
+            <%= render partial: 'categories/operation', collection: @user_budget_ops %>
+            <div class="text-center">
+              <%= link_to 'Load older transactions', url_for(only_path: true, params: { page: params[:page].to_i + 1 }),
+                          data: { turbo_frame: "page-#{params[:page].to_i + 1}" }, onclick: 'this.style.display = "none"' %>
+            </div>
+            <turbo-frame id="page-<%= params[:page].to_i + 1 %>">
+            </turbo-frame>
+          </turbo-frame>
+        </ul>
+      </div>
+    </div>
+  <% end %>
 </section>
