@@ -9,16 +9,12 @@ class BudgetController < ApplicationController
     @total_expenses = @user_ops_without_balance_ops.sum(:amount)
     @total_deposits = current_user.operations.where(name: 'Deposit').sum(:amount)
     @total_withdrawals = current_user.operations.where(name: 'Withdraw').sum(:amount)
-    @categories_expenses = current_user.categories.where.not(name: 'personal_budget').map do |c|
-      {
-        name: c.name,
-        total: c.operations.sum(:amount).to_f.abs
-      }
-    end
-    @categories_expenses = order_chart_data @categories_expenses
+    @categories_expenses = order_chart_data bar_chart_data
     @last_days_ops = last_days_expenses params[:lchart_days].to_i
-    @user_budget_ops = current_user.categories.find_by(name: 'personal_budget').operations.order(created_at: :desc)
-      .limit(5).offset(params[:page].to_i * 5)
+    budget_operations = current_user.categories.find_by(name: 'personal_budget').operations
+    @budget_operations_length = budget_operations.length
+    @user_budget_ops = budget_operations.order(created_at: :desc)
+      .limit(params[:page_items].to_i).offset(params[:page].to_i * params[:page_items].to_i)
   end
 
   def new_deposit
@@ -118,5 +114,15 @@ class BudgetController < ApplicationController
   def check_params
     params[:lchart_days] ||= '7'
     params[:page] ||= '0'
+    params[:page_items] ||= '5'
+  end
+
+  def bar_chart_data
+    current_user.categories.where.not(name: 'personal_budget').map do |c|
+      {
+        name: c.name,
+        total: c.operations.sum(:amount).to_f.abs
+      }
+    end
   end
 end

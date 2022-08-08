@@ -78,8 +78,10 @@
           <turbo-frame id="page-<%= params[:page] %>">
             <%= render partial: 'categories/operation', collection: @user_budget_ops %>
             <div class="text-center">
-              <%= link_to 'Load older transactions', url_for(only_path: true, params: { page: params[:page].to_i + 1 }),
-                          data: { turbo_frame: "page-#{params[:page].to_i + 1}" }, onclick: 'this.style.display = "none"' %>
+              <% if params[:page].to_i + 1 < max_pages(@budget_operations_length) %>
+                <%= link_to 'Load older transactions', url_for(only_path: true, params: { page: params[:page].to_i + 1, page_items: params[:page_items] }),
+                            data: { turbo_frame: "page-#{params[:page].to_i + 1}" }, onclick: 'this.style.display = "none"' %>
+              <% end %>
             </div>
             <turbo-frame id="page-<%= params[:page].to_i + 1 %>">
             </turbo-frame>

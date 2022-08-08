@@ -26,13 +26,23 @@
       <h4 class="m-0">Latest transactions</h4>
     </div>
   </div>
-  <% if @category.operations.empty? %>
+  <% if @category_operations.empty? %>
     <p class="text-center mt-3">There are no transactions yet.</p>
   <% else %>
     <div class="container-fluid overflow-auto">
       <div class="container-sm pt-2">
-        <ul class="categories-list gap-1">
-          <%= render partial: 'operation', collection: @category.operations %>
+        <ul class="categories-list">
+          <turbo-frame id="page-<%= params[:page] %>">
+            <%= render partial: 'operation', collection: @category_operations %>
+            <div class="text-center">
+              <% if params[:page].to_i + 1 < max_pages(@operations_length) %>
+                <%= link_to 'Load older transactions', url_for(only_path: true, params: { page: params[:page].to_i + 1, page_items: params[:page_items] }),
+                            data: { turbo_frame: "page-#{params[:page].to_i + 1}" }, onclick: 'this.style.display = "none"' %>
+              <% end %>
+            </div>
+            <turbo-frame id="page-<%= params[:page].to_i + 1 %>">
+            </turbo-frame>
+          </turbo-frame>
         </ul>
       </div>
     </div>

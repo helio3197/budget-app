@@ -1,6 +1,7 @@
 class CategoriesController < ApplicationController
   before_action :authenticate_user!, except: %i[index]
   before_action :set_category, only: %i[edit update destroy]
+  before_action :check_params, only: [:show]
 
   def index
     if user_signed_in?
@@ -18,6 +19,9 @@ class CategoriesController < ApplicationController
 
   def show
     @category = current_user.categories.find(params[:id])
+    @operations_length = @category.operations.length
+    @category_operations = @category.operations.order(created_at: :desc).limit(params[:page_items].to_i)
+      .offset(params[:page].to_i * params[:page_items].to_i)
   end
 
   def new
@@ -42,5 +46,10 @@ class CategoriesController < ApplicationController
 
   def set_category
     @category = current_user.categories.find(params[:id])
+  end
+
+  def check_params
+    params[:page] ||= '0'
+    params[:page_items] ||= '5'
   end
 end
