@@ -3,7 +3,7 @@ class OperationsController < ApplicationController
 
   def new
     @operation = Operation.new
-    @current_category = Category.find(params[:category_id])
+    @current_category = current_user.categories.find(params[:category_id])
     others_categories params[:category_id]
   end
 
@@ -15,16 +15,19 @@ class OperationsController < ApplicationController
 
     @operation.transaction do
       @operation.save!
+      if (operation_amount > current_user.balance) || amount_negative?(operation_amount)
+        raise ActiveRecord::RecordInvalid
+      end
+
       current_user.update! balance: current_user.balance - operation_amount
-      raise ActiveRecord::RecordInvalid if operation_amount > @user.balance || amount_negative?(operation_amount)
     end
 
     redirect_to category_path(params[:category_id]), notice: 'Transaction created successfully.'
   rescue ActiveRecord::RecordInvalid
     current_user.balance = current_user.balance_was
-    @operation.invalidate_negative_amount if amount_negative? operation_amount
-    @operation.invalidate_user_balance if operation_amount > @user.balance
-    @current_category = Category.find(params[:category_id])
+    @operation.invalidate_negative_amount if amount_negative?(operation_amount)
+    @operation.invalidate_user_balance if operation_amount > current_user.balance
+    @current_category = current_user.categories.find(params[:category_id])
     others_categories params[:category_id]
     render :new, status: :unprocessable_entity
   end

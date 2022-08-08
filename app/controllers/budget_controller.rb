@@ -6,7 +6,7 @@ class BudgetController < ApplicationController
     @user_ops_without_balance_ops = current_user.operations.where
       .not(id: current_user.categories.joins(:categories_operations).where(name: 'personal_budget')
                 .pluck(:operation_id))
-    @total_expenses = @user_ops_without_balance_ops.sum(:amount)
+    @total_expenses = @user_ops_without_balance_ops.sum(:amount).abs
     @total_deposits = current_user.operations.where(name: 'Deposit').sum(:amount)
     @total_withdrawals = current_user.operations.where(name: 'Withdraw').sum(:amount)
     @categories_expenses = order_chart_data bar_chart_data
@@ -22,18 +22,17 @@ class BudgetController < ApplicationController
   end
 
   def exec_deposit
-    @user = current_user
     @operation = balance_operation 'Deposit'
     operation_amount = operation_params[:amount]
 
     @operation.transaction do
       @operation.save!
-      @user.update! balance: @user.balance + operation_params[:amount].to_f
+      current_user.update! balance: current_user.balance + operation_params[:amount].to_f
       raise ActiveRecord::RecordInvalid if amount_negative? operation_amount
     end
     redirect_to my_budget_path, notice: 'Deposit processed successfully!'
   rescue ActiveRecord::RecordInvalid
-    current_user.balance = @user.balance_was
+    current_user.balance = current_user.balance_was
     @operation.invalidate_negative_amount if amount_negative? operation_amount
     render :new_transaction, status: :unprocessable_entity
   end
@@ -43,20 +42,21 @@ class BudgetController < ApplicationController
   end
 
   def exec_withdraw
-    @user = current_user
     @operation = balance_operation 'Withdraw'
     operation_amount = operation_params[:amount].to_f
 
     @operation.transaction do
       @operation.save!
-      raise ActiveRecord::RecordInvalid if operation_amount > @user.balance || amount_negative?(operation_amount)
+      if (operation_amount > current_user.balance) || amount_negative?(operation_amount)
+        raise ActiveRecord::RecordInvalid
+      end
 
-      @user.update! balance: @user.balance - operation_amount
+      current_user.update! balance: current_user.balance - operation_amount
     end
     redirect_to my_budget_path, notice: 'Withdrawal processed successfully!'
   rescue ActiveRecord::RecordInvalid
-    current_user.balance = @user.balance_was
-    @operation.invalidate_user_balance if operation_amount > @user.balance
+    current_user.balance = current_user.balance_was
+    @operation.invalidate_user_balance if operation_amount > current_user.balance
     @operation.invalidate_negative_amount if amount_negative? operation_amount
     render :new_transaction, status: :unprocessable_entity and return
   end
@@ -64,7 +64,7 @@ class BudgetController < ApplicationController
   private
 
   def balance_operation(name)
-    o = Operation.new(**operation_params, name:, categories: [@user.categories.first], user: @user)
+    o = Operation.new(**operation_params, name:, categories: [current_user.categories.first], user: current_user)
     o.amount = o.amount.to_f
     o.amount = -o.amount if name == 'Withdraw'
     o
