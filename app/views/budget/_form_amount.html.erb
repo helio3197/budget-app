@@ -1,0 +1,48 @@
+<% if current_path? '/my_budget/deposit' %>
+  <div class="field input-group">
+    <span class="input-group-text">$</span>
+    <%= form.label :amount, class: 'd-none' %>
+    <input
+      id="operation_amount"
+      class="form-control"
+      name="operation[amount]"
+      placeholder="Amount"
+      min="0"
+      step="0.01"
+      <% if operation.amount_before_type_cast && operation.amount_before_type_cast != '' %>
+        value=<%= operation.amount_before_type_cast %>
+      <% end %>
+      autofocus
+      type="number"
+    >
+  </div>
+  <div class="form-text mb-2">Enter the amount of money you want to deposit.</div>
+<% else %>
+  <div class="field input-group">
+    <span class="input-group-text">$</span>
+    <%= form.label :amount, class: 'd-none' %>
+    <input
+      id="operation_amount"
+      class="form-control"
+      name="operation[amount]"
+      placeholder="Amount"
+      min="0"
+      step="0.01"
+      <% if operation.amount_before_type_cast && operation.amount_before_type_cast != '' %>
+        value=<%= operation.amount_before_type_cast.abs %>
+      <% end %>
+      autofocus
+      type="number"
+      <%= 'disabled' if unavailable_balance? %>
+    >
+    <button
+      class="btn btn-outline-secondary"
+      type="button"
+      onclick="document.getElementById('operation_amount').value = <%= current_user.balance %>"
+      <%= 'disabled' if unavailable_balance? %>
+    >
+      Max
+    </button>
+  </div>
+  <div class="form-text mb-2">Enter the amount of money you want to withdraw.</div>
+<% end %>

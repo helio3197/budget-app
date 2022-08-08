@@ -2,8 +2,9 @@
   <%= render 'header_new' %>
 <% end %>
 
-<section class="container-fluid">
-  <div class="container-sm py-3 px-0">
+<section class="container-fluid px-0 overflow-auto">
+  <%= render 'components/balance_bar' %>
+  <div class="container-sm py-3">
     <%= render 'form', operation: @operation, current_category: @current_category, others_categories: @others_categories %>
   </div>
 </section>

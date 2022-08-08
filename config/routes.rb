@@ -6,6 +6,12 @@ Rails.application.routes.draw do
     resources :operations
   end
 
+  get 'my_budget', to: 'budget#index'
+  get 'my_budget/deposit', to: 'budget#new_deposit'
+  post 'my_budget/deposit', to: 'budget#exec_deposit'
+  get 'my_budget/withdraw', to: 'budget#new_withdraw'
+  post 'my_budget/withdraw', to: 'budget#exec_withdraw'
+
   # devise_scope :user do
   #   get 'sign_in', to: 'devise/sessions#new'
   #   get 'sign_up', to: 'devise/registrations#new'

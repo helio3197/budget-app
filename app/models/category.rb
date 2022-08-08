@@ -4,7 +4,8 @@ class Category < ApplicationRecord
   belongs_to :user
 
   validates_associated :user, :operations
-  validates :name, presence: true, length: { maximum: 50 }
+  validates :name, presence: true, length: { maximum: 20 }
+  validates :name, uniqueness: { case_sensitive: false }, on: :category_creation
   validates :icon, presence: true
 
   validates :icon, file_size: { less_than_or_equal_to: 1.megabytes },

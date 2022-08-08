@@ -2,7 +2,7 @@
   <%= render 'header_show' %>
 <% end %>
 
-<section class="d-flex flex-column h-100 pb-3 overflow-hidden" style="padding-top: 0.4rem">
+<section class="d-flex flex-column h-100 pb-3 overflow-hidden">
   <div class="container-fluid bg-light">
     <div class="container-sm py-2">
       <p class="m-0">Total expenses: <span class="fw-bold">$<%= @category.operations.sum :amount %></span></p>
@@ -38,6 +38,6 @@
     </div>
   <% end %>
   <div class="mt-auto new-category-btn container-fluid">
-    <%= link_to 'ADD TRANSACTION', new_category_operation_path(@category), class: 'btn btn-secondary' %>
+    <%= link_to 'NEW TRANSACTION', new_category_operation_path(@category), class: 'btn btn-secondary' %>
   </div>
 </section>

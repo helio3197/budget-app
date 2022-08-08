@@ -1,0 +1,30 @@
+<%= form_with(model: operation, scope: 'operation', url: request.path, class: 'form',
+              id: 'new_operation', data: { turbo_cache: false }) do |form| %>
+  <% if operation.errors.any? %>
+    <div>
+      <h2><%= pluralize(operation.errors.count, "error") %> prohibited this transaction from being processed:</h2>
+      <ul>
+        <% operation.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= render 'form_amount', form:, operation: %>
+
+  <div class="field mb-2">
+    <%= form.label :description, class: 'd-none' %>
+    <%= form.text_area :description,
+          class: 'form-control',
+          placeholder: 'Description (optional)',
+          disabled: unavailable_balance? && current_path?('/my_budget/withdraw') %>
+    <div class="form-text">Add a an optional description to this transaction.</div>
+  </div>
+
+  <% if current_path? '/my_budget/deposit' %>
+    <button class="btn btn-success px-3">Deposit <i class="fa-solid fa-arrow-up-from-bracket ms-1"></i></button>
+  <% else %>
+    <button class="btn btn-danger px-3" <%= 'disabled' if unavailable_balance? %>>Withdraw <i class="fa-solid fa-arrow-up-from-bracket ms-1" style="transform: rotate(180deg)"></i></button>
+  <% end %>
+<% end %>

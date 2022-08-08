@@ -5,10 +5,11 @@ class CategoriesController < ApplicationController
   def index
     if user_signed_in?
       @categories = if params[:search].present?
-                      current_user.categories.includes([icon_attachment: :blob]).where('name ~* ?', params[:search])
-                        .order created_at: :desc
+                      current_user.categories.includes([icon_attachment: :blob])
+                        .where('name ~* ? and name != ?', params[:search], 'personal_budget').order created_at: :desc
                     else
-                      current_user.categories.includes([icon_attachment: :blob]).order created_at: :desc
+                      current_user.categories.includes([icon_attachment: :blob]).where('name != ?', 'personal_budget')
+                        .order created_at: :desc
                     end
     else
       render :home
@@ -26,7 +27,7 @@ class CategoriesController < ApplicationController
   def create
     @category = Category.new(**category_params, user: current_user)
 
-    if @category.save
+    if @category.save(context: :category_creation)
       redirect_to categories_path, notice: 'Category created successfully.'
     else
       render :new, status: :unprocessable_entity
