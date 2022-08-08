@@ -100,7 +100,7 @@ module BudgetHelper
               return `$${value}`;
             }'
           },
-          begin_at_zero: true,
+          begin_at_zero: true
         }
       },
       plugins: {

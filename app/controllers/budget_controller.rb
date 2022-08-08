@@ -1,5 +1,6 @@
 class BudgetController < ApplicationController
   before_action :authenticate_user!
+  before_action :check_params, only: [:index]
 
   def index
     @user_ops_without_balance_ops = current_user.operations.where
@@ -15,7 +16,7 @@ class BudgetController < ApplicationController
       }
     end
     @categories_expenses = order_chart_data @categories_expenses
-    @last_days_ops = last_days_expenses
+    @last_days_ops = last_days_expenses params[:lchart_days].to_i
   end
 
   def new_deposit
@@ -110,5 +111,9 @@ class BudgetController < ApplicationController
         }
       end
     end
+  end
+
+  def check_params
+    params[:lchart_days] ||= '7'
   end
 end

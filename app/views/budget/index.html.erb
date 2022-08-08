@@ -41,18 +41,27 @@
           </div>
         <% end %>
       </div>
-      <h4 class="text-decoration-underline">Last week's operations</h4>
-      <div data-turbo-cache="false" class="position-relative">
-        <%= line_chart line_chart_data, line_chart_options %>
-        <% if @categories_expenses.empty? %>
-          <div
-            class="position-absolute text-center top-0 bottom-0 start-0 end-0 d-flex align-items-center justify-content-center"
-            style="background: #7a848e38;"
-          >
-            There are no metrics available at this moment.
+      <h4 class="text-decoration-underline m-0">Daily transactions</h4>
+      <turbo-frame id="line-chart">
+        <div data-turbo-cache="false" class="position-relative">
+          <div class="text-end">
+            <%= 
+              link_to_if params[:lchart_days] == '7', 'Last 14 days', url_for(only_path: true, params: { lchart_days: 14 }) do
+                link_to 'Last 7 days', url_for(only_path: true, params: { lchart_days: 7 })
+              end 
+            %>
           </div>
-        <% end %>
-      </div>
+          <%= line_chart line_chart_data, line_chart_options %>
+          <% if @categories_expenses.empty? %>
+            <div
+              class="position-absolute text-center top-0 bottom-0 start-0 end-0 d-flex align-items-center justify-content-center"
+              style="background: #7a848e38;"
+            >
+              There are no metrics available at this moment.
+            </div>
+          <% end %>
+        </div>
+      </turbo-frame>
     </div>
     <%= debug @last_days_ops %>
     <%= debug @categories_expenses %>
