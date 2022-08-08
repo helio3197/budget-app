@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ModuleLength
 module BudgetHelper
   def unavailable_balance?
     current_user.balance <= 0
@@ -123,3 +124,4 @@ module BudgetHelper
     }
   end
 end
+# rubocop:enable Metrics/ModuleLength
