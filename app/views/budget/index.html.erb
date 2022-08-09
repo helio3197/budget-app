@@ -30,7 +30,7 @@
         </ul>
       </div>
       <h4 class="text-decoration-underline">Expenses by categories</h4>
-      <div class="position-relative mb-3">
+      <div class="position-relative mb-3" data-controller="charts">
         <%= bar_chart bar_chart_data, bar_chart_options %>
         <% if @categories_expenses.empty? %>
           <div
@@ -39,11 +39,21 @@
           >
             There are no metrics available at this moment.
           </div>
+        <% else %>
+          <div
+            data-charts-target="loading"
+            class="position-absolute d-flex d-none text-center top-0 bottom-0 start-0 end-0 align-items-center justify-content-center"
+            style="background: #7a848e38;"
+          >
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
         <% end %>
       </div>
       <h4 class="text-decoration-underline m-0">Daily transactions</h4>
       <turbo-frame id="line-chart">
-        <div class="position-relative">
+        <div class="position-relative" data-controller="charts">
           <div class="text-end">
             <%= 
               link_to_if params[:lchart_days] == '7', 'Last 14 days', url_for(only_path: true, params: { lchart_days: 14 }) do
@@ -52,6 +62,15 @@
             %>
           </div>
           <%= line_chart line_chart_data, line_chart_options %>
+          <div
+            data-charts-target="loading"
+            class="position-absolute d-flex d-none text-center top-0 bottom-0 start-0 end-0 align-items-center justify-content-center"
+            style="background: #7a848e38;"
+          >
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
         </div>
       </turbo-frame>
     </div>
