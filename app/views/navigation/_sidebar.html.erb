@@ -1,5 +1,13 @@
 <nav class="navbar navbar-dark bg-primary navbar-expand-lg sidebar">
-  <div class="offcanvas-lg offcanvas-start" data-controller="slide-menu" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+  <div
+    class="offcanvas-lg offcanvas-start"
+    data-controller="slide-menu"
+    data-action="open-menu:openmenu@document->slide-menu#open"
+    tabindex="-1"
+    id="offcanvasNavbar"
+    data-turbo-permanent
+    aria-labelledby="offcanvasNavbarLabel"
+  >
     <div class="offcanvas-header">
       <h1 class="offcanvas-title text-light" id="offcanvasNavbarLabel">
         <%= link_to 'MyBudgetApp', root_path, class: 'text-reset text-decoration-none' %>

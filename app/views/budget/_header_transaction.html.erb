@@ -1,4 +1,4 @@
-<%= link_to my_budget_path, class: 'back-btn' do %>
+<%= link_to my_budget_path, class: 'back-btn', data: { turbo_action: 'restore' } do %>
   <i class="fa-solid fa-arrow-left"></i>
 <% end %>
 <h2 class="mx-auto">

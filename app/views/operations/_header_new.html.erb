@@ -1,4 +1,4 @@
-<%= link_to category_path(params[:category_id]), class: 'back-btn' do %>
+<%= link_to category_path(params[:category_id]), class: 'back-btn', data: { turbo_action: 'restore' } do %>
   <i class="fa-solid fa-arrow-left"></i>
 <% end %>
 <h2 class="mx-auto text-truncate px-1">NEW TRANSACTION</h2>
