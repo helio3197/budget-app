@@ -3,7 +3,7 @@
 <% end %>
 
 <section class="container-fluid overflow-auto">
-  <div class="container-sm py-3 px-0">
+  <div class="container-sm py-3 px-0 position-relative" data-controller="previewing">
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'form' }) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
 
@@ -75,6 +75,16 @@
       <p>Unhappy?</p>
       <%= button_to "Cancel my account", registration_path(resource_name), form: { data: { turbo_confirm: "Are you sure?" } }, method: :delete,
                                                                            class: 'btn-to-link' %>
+    </div>
+
+    <div
+      data-previewing-target="loading"
+      class="position-absolute d-flex d-none text-center top-0 bottom-0 start-0 end-0 align-items-center justify-content-center"
+      style="background: #7a848e38;"
+    >
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
     </div>
 
   </div>
