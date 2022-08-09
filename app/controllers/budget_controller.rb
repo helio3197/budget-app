@@ -93,7 +93,7 @@ class BudgetController < ApplicationController
   def last_days_expenses(days_amount = 7)
     days_amount -= 1
     days_ops = @user_ops_without_balance_ops.where(created_at: (Time.now.midnight - days_amount.days)..Time.now)
-      .select('SUM(amount) AS total, CAST(created_at AS date)').group('CAST(created_at AS date)')
+      .select('SUM(amount) AS total, CAST(created_at AS date)').group('CAST(created_at AS date)').order('created_at')
     i = 0
     ((Date.today - days_amount.days)..Date.today).map do |d|
       if d.day == days_ops[i]&.created_at&.day
