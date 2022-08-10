@@ -26,13 +26,13 @@
         <p data-flex-wrapped-helper-target="element"><%= current_user.name %></p>
       </div>
       <ul class="navbar-nav justify-content-end flex-grow-1 fs-5">
-        <li class="nav-item">
+        <li class="nav-item" data-controller="navbar-link" data-navbar-link-name-value="Categories" data-navbar-link-paths-value="<%= [root_path, categories_path] %>">
           <%= link_to 'Categories', root_path, class: 'nav-link', aria: { current: 'page' } %>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" data-controller="navbar-link" data-navbar-link-name-value="My budget" data-navbar-link-paths-value="<%= [my_budget_path] %>">
           <%= link_to 'My budget', my_budget_path, class: 'nav-link', aria: { current: 'page' } %>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" data-controller="navbar-link" data-navbar-link-name-value="Account settings" data-navbar-link-paths-value="<%= [edit_user_registration_path] %>">
           <%= link_to 'Account settings', edit_user_registration_path, class: 'nav-link', aria: { current: 'page' } %>
         </li>
         <li class="nav-item">
