@@ -95,7 +95,7 @@ class BudgetController < ApplicationController
     days_ops = @user_ops_without_balance_ops.where(created_at: (Time.now.midnight - days_amount.days)..Time.now)
       .select('SUM(amount) AS total, CAST(created_at AS date)').group('CAST(created_at AS date)').order('created_at')
     i = 0
-    ((Date.today - days_amount.days)..Date.today).map do |d|
+    ((DateTime.now.utc.to_date - days_amount.days)..DateTime.now.utc.to_date).map do |d|
       if d.day == days_ops[i]&.created_at&.day
         i += 1
         {
