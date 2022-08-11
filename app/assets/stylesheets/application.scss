@@ -77,3 +77,13 @@ body {
 .turbo-progress-bar {
   background-color: greenyellow;
 }
+
+.modal-backdrop,
+.modal {
+  position: absolute;
+}
+
+.modal-backdrop {
+  width: 100%;
+  height: 100%;
+}

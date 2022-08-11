@@ -2,7 +2,7 @@
   <%= render 'header_index' %>
 <% end %>
 
-<section class="d-flex flex-column h-100 pb-3 overflow-auto">
+<section class="d-flex flex-column h-100 pb-3 overflow-auto position-relative" id="modal-parent">
   <%= render 'components/balance_bar' %>
   <div class="container-fluid py-2">
     <div class="container-sm category-item flex-column">
@@ -102,4 +102,7 @@
     </div>
   <% end %>
   
+  <turbo-frame id="operation-modal">
+  </turbo-frame>
+
 </section>

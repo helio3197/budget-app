@@ -3,8 +3,12 @@ Rails.application.routes.draw do
                                                                                sessions: 'sessions' }
 
   resources :categories do
-    resources :operations
+    resources :operations, except: %i[index show]
   end
+
+  resources :operations, only: %i[index show]
+
+  get 'categories/:id/operations', to: redirect('categories/%{id}')
 
   get 'my_budget', to: 'budget#index'
   get 'my_budget/deposit', to: 'budget#new_deposit'
