@@ -1,5 +1,5 @@
 <turbo-frame id="operation-modal">
-  <div class="modal fade" id="operation-<%= params[:id] %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="operation-<%= params[:id] %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-turbo-cache="false">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -16,5 +16,4 @@
       </div>
     </div>
   </div>
-  <div id="modal-backdrop"></div>
 </turbo-frame>

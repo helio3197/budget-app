@@ -5,22 +5,27 @@ export default class extends Controller {
 
   
 
-  show(e) {
+  show() {
     const modalFrame = document.getElementById('operation-modal')
     const showModal = () => {
       const modal = new bootstrap.Modal(`#${this.modalIdValue}`)
       const modalParent = document.getElementById('modal-parent')
-      const scrollPos = modalParent.scrollTop
-      const modalElement = document.getElementById(this.modalIdValue)
       modal.show()
-      modalElement.addEventListener('hide.bs.modal', () => {
-        modalParent.style = null
-      })
-      modalParent.style.setProperty('overflow', 'hidden', 'important')
+      const modalElement = document.getElementById(this.modalIdValue)
       const modalBackdrop = document.querySelector('.modal-backdrop.fade')
-      document.getElementById('modal-backdrop').replaceWith(modalBackdrop)
-      modalBackdrop.style.top = `${scrollPos}px`
-      modalElement.style.top = `${scrollPos}px`
+      modalBackdrop.dataset.turboCache = 'false'
+
+      const resizeObserver = new ResizeObserver(() => {
+        modalBackdrop.style.top = `${modalParent.offsetTop}px`
+        modalBackdrop.style.left = `${modalParent.offsetLeft}px`
+        modalElement.style.top = `${modalParent.offsetTop}px`
+        modalElement.style.left = `${modalParent.offsetLeft}px`
+        modalElement.style.width = `${modalParent.offsetWidth}px`
+      })
+      resizeObserver.observe(modalParent)
+      modalElement.addEventListener('hide.bs.modal', () => {
+        resizeObserver.unobserve(modalParent)
+      })
       modalFrame.removeEventListener('turbo:frame-load', showModal)
     }
     modalFrame.addEventListener('turbo:frame-load', showModal)
