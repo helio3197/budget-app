@@ -1,6 +1,10 @@
 class OperationsController < ApplicationController
   before_action :authenticate_user!
 
+  def show
+    @operation = current_user.operations.find params[:id]
+  end
+
   def new
     @operation = Operation.new
     @current_category = current_user.categories.find(params[:category_id])

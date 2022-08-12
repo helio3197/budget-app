@@ -1,17 +1,49 @@
 <turbo-frame id="operation-modal">
   <div class="modal fade" id="operation-<%= params[:id] %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-turbo-cache="false">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Operation #<%= @operation.id %></h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          ...
+          <p><span class="fw-bold">Name:</span> <%= @operation.name %> </p>
+          <p>
+            <span class="fw-bold">Amount:</span>
+            <% if @operation.amount.negative? %>
+              <span class="text-danger">-$<%= @operation.amount.abs %></span>
+            <% else %>
+              <span class="text-success">+$<%= @operation.amount %></span>
+            <% end %>
+          </p>
+          <p>
+            <span class="fw-bold">Description:</span>
+            <% if @operation.description.empty? %>
+              <span class="fst-italic text-gray-600">No description was provided for this operation.</span>
+            <% else %>
+              <%= @operation.description %>
+            <% end %>
+          </p>
+          <div>
+            <p><span class="fw-bold">Categories:</span></p>
+            <ul>
+              <% if @operation.categories.first.name == 'personal_budget' %>
+                <li class="dropdown-item d-flex align-items-center gap-2">
+                  <p class="m-0 fst-italic text-gray-600">Personal balance</p>
+                </li>
+              <% else %>
+                <% @operation.categories.each do |category| %>
+                  <li class="dropdown-item d-flex align-items-center gap-2">
+                    <img src=<%= url_for category.icon %> class="icon-thumbnail dropdow-icon-thumbnail" alt="category item">
+                    <p class="m-0 text-truncate"><%= category.name %></p>
+                  </li>
+                <% end %>
+              <% end %>
+            </ul>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
         </div>
       </div>
     </div>

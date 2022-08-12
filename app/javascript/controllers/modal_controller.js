@@ -21,6 +21,7 @@ export default class extends Controller {
         modalElement.style.top = `${modalParent.offsetTop}px`
         modalElement.style.left = `${modalParent.offsetLeft}px`
         modalElement.style.width = `${modalParent.offsetWidth}px`
+        modalElement.firstElementChild.style.height = `calc(${modalParent.offsetHeight}px - var(--bs-modal-margin) * 2)`
       })
       resizeObserver.observe(modalParent)
       modalElement.addEventListener('hide.bs.modal', () => {
