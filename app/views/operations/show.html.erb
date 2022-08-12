@@ -7,6 +7,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
+          <p><span class="fw-bold">Date:</span> <%= @operation.created_at.localtime.strftime "%b %d %Y at %l:%M %P" %> </p>
           <p><span class="fw-bold">Name:</span> <%= @operation.name %> </p>
           <p>
             <span class="fw-bold">Amount:</span>
@@ -26,14 +27,14 @@
           </p>
           <div>
             <p><span class="fw-bold">Categories:</span></p>
-            <ul>
+            <ul class="m-0">
               <% if @operation.categories.first.name == 'personal_budget' %>
                 <li class="dropdown-item d-flex align-items-center gap-2">
                   <p class="m-0 fst-italic text-gray-600">Personal balance</p>
                 </li>
               <% else %>
                 <% @operation.categories.each do |category| %>
-                  <li class="dropdown-item d-flex align-items-center gap-2">
+                  <li class="dropdown-item d-flex align-items-center gap-2 mb-2">
                     <img src=<%= url_for category.icon %> class="icon-thumbnail dropdow-icon-thumbnail" alt="category item">
                     <p class="m-0 text-truncate"><%= category.name %></p>
                   </li>
