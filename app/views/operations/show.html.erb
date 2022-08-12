@@ -1,12 +1,12 @@
 <turbo-frame id="operation-modal">
-  <div class="modal fade" id="operation-<%= params[:id] %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-turbo-cache="false">
+  <div class="modal fade" id="operation-<%= params[:id] %>" tabindex="-1" aria-labelledby="operationModalLabel" aria-hidden="true" data-turbo-cache="false">
     <div class="modal-dialog modal-dialog-scrollable">
-      <div class="modal-content">
+      <div class="modal-content" data-controller="operation-modal">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Operation #<%= @operation.id %></h5>
+          <h5 class="modal-title" id="operationModalLabel">Operation #<%= @operation.id %></h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body position-relative" data-operation-modal-target="modalBody">
           <p><span class="fw-bold">Date:</span> <%= @operation.created_at.localtime.strftime "%b %d %Y at %l:%M %P" %> </p>
           <p><span class="fw-bold">Name:</span> <%= @operation.name %> </p>
           <p>
@@ -44,6 +44,29 @@
           </div>
         </div>
         <div class="modal-footer">
+          <div class="dropdown">
+            <button
+              class="btn btn-primary dropdown-toggle"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              data-operation-modal-target="dropdownBtn"
+            >
+              Actions
+            </button>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <li>
+                <button
+                  class="dropdown-item"
+                  type="button"
+                  data-action="operation-modal#confirm"
+                  data-operation-modal-action-param="revert"
+                >
+                  Revert operation
+                </button>
+              </li>
+            </ul>
+          </div>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
