@@ -59,10 +59,15 @@
                 <li>
                   <button
                     class="dropdown-item"
-                    type="button"
-                    data-action="operation-modal#confirm"
-                    data-operation-modal-action-param="revert"
-                    data-operation-modal-action-params-param='{"id":"<%= @operation.id %>","category-id":"<%= params[:category] %>"}'
+                    type="button"                    
+                    <% if @operation.created_at < Time.now - 2.days %>
+                      data-action="operation-modal#showError"
+                      data-operation-modal-error-param="This operation cannot be reverted. Only operations less than 2 days old can be refunded."
+                    <% else %>
+                      data-action="operation-modal#confirm"
+                      data-operation-modal-action-param="revert"
+                      data-operation-modal-action-params-param='{"id":"<%= @operation.id %>","category-id":"<%= params[:category] %>"}'
+                    <% end %>
                   >
                     Revert operation
                   </button>

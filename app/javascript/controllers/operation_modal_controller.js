@@ -29,6 +29,29 @@ export default class extends Controller {
     form.requestSubmit()
   }
 
+  showError({ params: { error } }) {
+    setTimeout(() => {
+      this.dropdownBtnTarget.disabled = true
+    }, 1) 
+    const cerrorElement = document.createElement('div')
+    cerrorElement.className = 'fade show position-absolute top-0 bottom-0 start-0 end-0 bg-dark bg-opacity-50 p-3'
+    cerrorElement.innerHTML = `
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title">Error!</h6>
+        </div>
+        <div class="modal-body">
+          ${error}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-action="operation-modal#removeConfirm">Accept</button>
+        </div>
+      </div>
+    `
+    this.modalBodyTarget.appendChild(cerrorElement)
+    this.confirmElement = cerrorElement
+  }
+
   confirm({ params: { action, actionParams } }) {
     setTimeout(() => {
       this.dropdownBtnTarget.disabled = true
