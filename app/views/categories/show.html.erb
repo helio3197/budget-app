@@ -5,7 +5,7 @@
 <section class="d-flex flex-column h-100 pb-3 overflow-hidden" id="modal-parent">
   <div class="container-fluid bg-light">
     <div class="container-sm py-2">
-      <p class="m-0">Total expenses: <span class="fw-bold">$<%= @category.operations.sum :amount %></span></p>
+      <p class="m-0">Total expenses: <span class="fw-bold">$<%= @category.operations.sum(:amount).abs %></span></p>
     </div>
   </div>
   <div class="container-fluid">

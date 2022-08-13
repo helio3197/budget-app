@@ -30,9 +30,14 @@
     </div>
   </div>
 
-  <div class="field">
+  <div class="field mb-2">
     <%= form.label :name, class: 'd-none' %>
     <%= form.text_field :name, autofocus: true, autocomplete: 'name', class: 'form-control', placeholder: 'Name' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description, class: 'd-none' %>
+    <%= form.text_area :description, class: 'form-control', placeholder: 'Description (optional)', rows: '4' %>
   </div>
 
 <% end %>

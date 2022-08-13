@@ -6,7 +6,7 @@
       <small class="mt-auto"><%= category.created_at.strftime "%m-%d-%Y" %></small>
     </div>
     <div class="ms-auto">
-      <p>$<%= category.operations.sum :amount %></p>
+      <p>$<%= category.operations.sum(:amount).abs %></p>
     </div>
   <% end %>
 </li>
