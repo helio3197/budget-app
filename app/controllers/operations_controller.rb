@@ -65,7 +65,7 @@ class OperationsController < ApplicationController
   private
 
   def operation_params
-    params.require(:operation).permit :name, :amount, :categories, :description, :category_id
+    params.require(:operation).permit :name, :amount, :categories, :description, :category_id, :reverted
   end
 
   def others_categories(current_cat)
