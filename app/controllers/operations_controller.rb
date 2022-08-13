@@ -36,10 +36,14 @@ class OperationsController < ApplicationController
     render :new, status: :unprocessable_entity
   end
 
+  def update
+    redirect_to category_path(operation_params[:category_id]), notice: 'Done'
+  end
+
   private
 
   def operation_params
-    params.require(:operation).permit :name, :amount, :categories, :description
+    params.require(:operation).permit :name, :amount, :categories, :description, :category_id
   end
 
   def others_categories(current_cat)

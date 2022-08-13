@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     resources :operations, except: %i[index show]
   end
 
-  resources :operations, only: %i[index show]
+  resources :operations, only: %i[index show update]
 
   get 'categories/:id/operations', to: redirect('categories/%{id}')
 

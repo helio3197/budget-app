@@ -3,11 +3,33 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ['modalBody', 'dropdownBtn']
 
-  revert() {
-    
+  revert({ params: { id, categoryId } }) {
+    const form = document.createElement('form')
+    form.hidden = true
+    form.method = 'post'
+    form.action = `/operations/${id}`
+    form.dataset.turboFrame = '_top'
+    const inputMethod = document.createElement('input')
+    inputMethod.name = '_method'
+    inputMethod.value = 'patch'
+    const inputCSRF = document.createElement('input')
+    inputCSRF.name = document.querySelector('[name="csrf-param"]').content
+    inputCSRF.value = document.querySelector('[name="csrf-token"]').content
+    const inputReverted = document.createElement('input')
+    inputReverted.name = 'operation[reverted]'
+    inputReverted.value = 'true'
+    const inputCategoryId = document.createElement('input')
+    inputCategoryId.name = 'operation[category_id]'
+    inputCategoryId.value = categoryId
+    form.appendChild(inputReverted)
+    form.appendChild(inputMethod)
+    form.appendChild(inputCSRF)
+    form.appendChild(inputCategoryId)
+    this.modalBodyTarget.appendChild(form)
+    form.requestSubmit()
   }
 
-  confirm({ params: { action } }) {
+  confirm({ params: { action, actionParams } }) {
     setTimeout(() => {
       this.dropdownBtnTarget.disabled = true
     }, 1) 
@@ -22,7 +44,14 @@ export default class extends Controller {
           This operation is irreversible.
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-action="operation-modal#${action}">Yes</button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-action="operation-modal#${action}"
+            ${Object.entries(actionParams).map((e) => (`data-operation-modal-${e[0]}-param="${e[1]}"`)).join(' ')}
+          >
+            Yes
+          </button>
           <button type="button" class="btn btn-secondary" data-action="operation-modal#removeConfirm">No</button>
         </div>
       </div>

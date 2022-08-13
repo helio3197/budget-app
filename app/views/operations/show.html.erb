@@ -61,6 +61,7 @@
                   type="button"
                   data-action="operation-modal#confirm"
                   data-operation-modal-action-param="revert"
+                  data-operation-modal-action-params-param='{"id":"<%= @operation.id %>","category-id":"<%= params[:category] %>"}'
                 >
                   Revert operation
                 </button>
