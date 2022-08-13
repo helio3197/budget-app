@@ -44,30 +44,32 @@
           </div>
         </div>
         <div class="modal-footer">
-          <div class="dropdown">
-            <button
-              class="btn btn-primary dropdown-toggle"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              data-operation-modal-target="dropdownBtn"
-            >
-              Actions
-            </button>
-            <ul class="dropdown-menu dropdown-menu-dark">
-              <li>
-                <button
-                  class="dropdown-item"
-                  type="button"
-                  data-action="operation-modal#confirm"
-                  data-operation-modal-action-param="revert"
-                  data-operation-modal-action-params-param='{"id":"<%= @operation.id %>","category-id":"<%= params[:category] %>"}'
-                >
-                  Revert operation
-                </button>
-              </li>
-            </ul>
-          </div>
+          <% unless params[:ref] == 'budget' || @operation.reverted %>
+            <div class="dropdown">
+              <button
+                class="btn btn-primary dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                data-operation-modal-target="dropdownBtn"
+              >
+                Actions
+              </button>
+              <ul class="dropdown-menu dropdown-menu-dark">
+                <li>
+                  <button
+                    class="dropdown-item"
+                    type="button"
+                    data-action="operation-modal#confirm"
+                    data-operation-modal-action-param="revert"
+                    data-operation-modal-action-params-param='{"id":"<%= @operation.id %>","category-id":"<%= params[:category] %>"}'
+                  >
+                    Revert operation
+                  </button>
+                </li>
+              </ul>
+            </div>
+          <% end %>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         </div>
       </div>

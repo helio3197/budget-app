@@ -37,7 +37,29 @@ class OperationsController < ApplicationController
   end
 
   def update
-    redirect_to category_path(operation_params[:category_id]), notice: 'Done'
+    operation_to_revert = Operation.find params[:id]
+
+    if operation_to_revert.created_at < Time.now - 2.days
+      error = 'Only operations less than 2 days old can be reversed.'
+      raise ActiveRecord::RecordInvalid
+    end
+
+    reverted_operation = Operation.new user: current_user, name: "[Refunded]#{operation_to_revert.name}",
+                                       amount: -operation_to_revert.amount, reverted: true,
+                                       description: 'Transaction reverted by the user.',
+                                       categories: operation_to_revert.categories
+
+    Operation.transaction do
+      operation_to_revert.update! reverted: true
+      reverted_operation.save!
+      current_user.update! balance: current_user.balance + -operation_to_revert.amount
+    end
+
+    redirect_to category_path(operation_params[:category_id]),
+                notice: "Operation ##{operation_to_revert.id} successfully refunded."
+  rescue ActiveRecord::RecordInvalid => e
+    error ||= e.record.errors.to_json
+    redirect_to category_path(operation_params[:category_id]), notice: "Something went wrong: #{error}"
   end
 
   private
