@@ -2,7 +2,7 @@ class OperationsController < ApplicationController
   before_action :authenticate_user!
 
   def show
-    @operation = current_user.operations.find params[:id]
+    @operation = current_user.operations.includes(categories: { icon_attachment: :blob }).find params[:id]
   end
 
   def new
