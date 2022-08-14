@@ -10,16 +10,24 @@
     </div>
   <% end %>
 
-  <div class="field avatar mb-3" data-controller="avatar">
+  <div class="field avatar mb-3" data-controller="avatar" data-avatar-placeholder-pic-value=<%= asset_path 'placeholder-icon.png' %>>
     <div class="preview">
       <%= image_tag 'placeholder-icon.png', data: { avatar_target: 'preview' }, alt: 'category-icon',
                                             class: 'rounded' %>
     </div>
-    <div class="image-upload">
-      <div class="file-picker">
-        <%= form.label :icon, 'Upload icon' %>
-        <%= form.file_field :icon, data: { action: 'change->avatar#update', avatar_target: 'picture' },
-                                  accept: 'image/jpeg, image/png, image/gif' %>
+    <div class="image-upload overflow-hidden" data-avatar-target="uploadArea">
+      <div class="d-flex align-items-center mb-2 flex-wrap" style="column-gap: 0.5rem; row-gap: 0.3rem;">
+        <div class="file-picker">
+          <%= form.label :icon, 'Upload icon', class: 'btn btn-link p-0' %>
+          <%= form.file_field :icon, data: { action: 'change->avatar#update', avatar_target: 'picture' },
+                                    accept: 'image/jpeg, image/png, image/gif' %>
+        </div>
+        <div>|</div>
+        <div>
+          <button type="button" class="btn btn-link p-0" style="font-size: 1.2rem" data-action="avatar#showUrlInput">
+            Load from URL
+          </button>
+        </div>
       </div>
       <div class="file-selection">
         <small data-avatar-target="fileName">No file chosen...</small>

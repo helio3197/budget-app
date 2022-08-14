@@ -1,7 +1,16 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ['preview', 'picture', 'fileName', 'clearBtn', 'placeHolderPic', 'removeAvatarBtn']
+  static targets = [
+    'preview',
+    'picture',
+    'fileName',
+    'clearBtn',
+    'placeHolderPic',
+    'removeAvatarBtn',
+    'uploadArea',
+    'imgUrl',
+  ]
   static values = { placeholderPic: String }
 
   connect() {
@@ -48,6 +57,62 @@ export default class extends Controller {
     removeAvatarInput.id = 'remove_avatar'
     document.getElementById('edit_user').appendChild(removeAvatarInput)
     this.avatarRemoved = true
+  }
+
+  showUrlInput() {
+    this.originalUploadArea = this.uploadAreaTarget.cloneNode(true)
+    this.uploadAreaTarget.innerHTML = `
+      <div class="input-group has-validation">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Image source URL"
+          style="min-width: 100px"
+          data-avatar-target="imgUrl"
+        >
+        <button class="btn btn-outline-primary" type="button" data-action="avatar#processImgUrl">
+          <span class="d-none d-sm-inline">Ok</span>
+          <i class="fa-solid fa-check"></i>
+        </button>
+        <button class="btn btn-outline-secondary" type="button" data-action="avatar#hideUrlInput">
+          <span class="d-none d-sm-inline">Cancel</span>
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="invalid-feedback">
+          URL invalid.
+        </div>
+      </div>
+    `
+  }
+
+  hideUrlInput() {
+    this.uploadAreaTarget.replaceWith(this.originalUploadArea)
+  }
+
+  processImgUrl() {
+    if (!/^https?:\/\/(?:[\w-]+\.)?[\w-]+\.[\w]+(?:\/.+)$/.test(this.imgUrlTarget.value)) {
+      this.imgUrlTarget.classList.add('is-invalid')
+      return
+    }
+
+    this.previewTarget.src = `/get-image?img=${this.imgUrlTarget.value}`
+    this.formElement = this.imgUrlTarget.form
+    this.formElement.action += `?img=${this.imgUrlTarget.value}`
+    this.uploadAreaTarget.innerHTML = `
+      <div class="file-selection">
+        <small class="fs-6">${this.imgUrlTarget.value}</small>
+        <button type="button" data-action="avatar#removeUrlImg">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    `
+    return
+  }
+
+  removeUrlImg() {
+    this.formElement.action = this.formElement.action.split('?')[0]
+    this.hideUrlInput()
+    this.previewTarget.src = this.placeholderPicValue
   }
 
   get picture() {

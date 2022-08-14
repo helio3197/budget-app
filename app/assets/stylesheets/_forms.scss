@@ -27,7 +27,7 @@
         position: relative;
       }
 
-      input {
+      input[type="file"] {
         position: absolute;
         top: 0;
         left: 0;
@@ -66,9 +66,9 @@
         flex-shrink: 0;
       }
 
-      .image-upload {
-        width: auto;
-      }
+      // .image-upload {
+      //   width: auto;
+      // }
     }
   }
 
