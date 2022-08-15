@@ -2,42 +2,65 @@
   <%= render 'header_show' %>
 <% end %>
 
-<section class="d-flex flex-column h-100 pb-3 overflow-hidden">
-  <div class="container-fluid bg-light">
-    <div class="container-sm py-2">
-      <p class="m-0">Total expenses: <span class="fw-bold">$<%= @category.operations.sum :amount %></span></p>
+<section class="d-flex flex-column h-100 pb-3 overflow-hidden" id="modal-parent">
+  <div class="overflow-auto">
+    <div class="container-fluid bg-light sticky-top">
+      <div class="container-sm py-2">
+        <p class="m-0">Total expenses: <span class="fw-bold">$<%= @category.operations.sum(:amount).abs %></span></p>
+      </div>
     </div>
-  </div>
-  <div class="container-fluid">
-    <div class="container-sm py-2 px-0">
-      <div class="category-item flex-column">
-        <div class="d-flex align-items-center gap-3">
-          <%= image_tag @category.icon, alt: 'icon', class: 'category-item-icon' %>
-          <h3 class="m-0 overflow-hidden"><%= @category.name %></h3>
-        </div>
-        <div class="px-2 d-flex flex-column mt-2">
-          <small class="mt-auto">Created at: <%= @category.created_at.strftime "%m-%d-%Y" %></small>
+    <div class="container-fluid">
+      <div class="container-sm py-2 px-0">
+        <div class="category-item flex-column">
+          <div class="d-flex align-items-center gap-3">
+            <%= image_tag @category.icon, alt: 'icon', class: 'category-item-icon' %>
+            <h3 class="m-0 overflow-hidden"><%= @category.name %></h3>
+          </div>
+          <div class="p-2">
+            <% if  @category.description.nil? || @category.description.empty? %>
+              <p class="fst-italic text-gray-600 m-0">No provided description.</p>
+            <% else %>
+              <p class="m-0"><%= @category.description %></p>
+            <% end %>
+          </div>
+          <div class="px-2 d-flex flex-column mt-2">
+            <small class="mt-auto">Created at: <%= @category.created_at.strftime "%m-%d-%Y" %></small>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="container-fluid bg-light py-2">
-    <div class="container-sm">
-      <h4 class="m-0">Latest transactions</h4>
-    </div>
-  </div>
-  <% if @category.operations.empty? %>
-    <p class="text-center mt-3">There are no transactions yet.</p>
-  <% else %>
-    <div class="container-fluid overflow-auto">
-      <div class="container-sm pt-2">
-        <ul class="categories-list gap-1">
-          <%= render partial: 'operation', collection: @category.operations %>
-        </ul>
+    <div class="container-fluid bg-light py-2">
+      <div class="container-sm">
+        <h4 class="m-0">Latest transactions</h4>
       </div>
     </div>
-  <% end %>
+    <% if @category_operations.empty? %>
+      <p class="text-center mt-3">There are no transactions yet.</p>
+    <% else %>
+      <div class="container-fluid overflow-auto">
+        <div class="container-sm pt-2">
+          <ul class="categories-list">
+            <turbo-frame id="page-<%= params[:page] %>">
+              <%= render partial: 'operation', collection: @category_operations %>
+              <div class="text-center">
+                <% if params[:page].to_i + 1 < max_pages(@operations_length) %>
+                  <%= link_to 'Load older transactions', url_for(only_path: true, params: { page: params[:page].to_i + 1, page_items: params[:page_items] }),
+                              data: { turbo_frame: "page-#{params[:page].to_i + 1}" }, onclick: 'this.style.display = "none"' %>
+                <% end %>
+              </div>
+              <turbo-frame id="page-<%= params[:page].to_i + 1 %>">
+              </turbo-frame>
+            </turbo-frame>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+  </div>
   <div class="mt-auto new-category-btn container-fluid">
     <%= link_to 'NEW TRANSACTION', new_category_operation_path(@category), class: 'btn btn-secondary' %>
   </div>
+
+  <turbo-frame id="operation-modal">
+  </turbo-frame>
+
 </section>

@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :user
 
   protected
 
@@ -13,9 +12,5 @@ class ApplicationController < ActionController::Base
 
   def amount_negative?(value)
     value&.to_f&.negative?
-  end
-
-  def user
-    @user = current_user
   end
 end

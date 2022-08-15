@@ -1,11 +1,18 @@
-<li class="category-item">
-  <%= link_to '', class: 'd-flex w-100 text-decoration-none' do %>
+<li class="category-item mb-1 operation-item">
+  <%= link_to (request.path.match(/\/categories\/\d+/) ? operation_path(operation, category: params[:id]) : operation_path(operation, ref: request.parameters[:controller])),
+              class: "d-flex w-100 text-decoration-none #{operation.amount.negative? ? 'text-danger' : 'text-success'}",
+              data: { turbo_frame: 'operation-modal', controller: 'modal', action: 'modal#show', modal_modal_id_value: "operation-#{operation.id}" } do
+  %>
     <div class="px-2 d-flex flex-column overflow-hidden">
       <p class="m-0 text-truncate"><%= operation.name %></p>
       <small class="mt-auto text-gray-600"><%= operation.created_at.localtime.strftime "%b %d %Y at %l:%M %P" %> | Nº <%= operation.id %></small>
     </div>
     <div class="ms-auto">
-      <p>$<%= operation.amount %></p>
+      <% if operation.amount.negative? %>
+        <p>-$<%= operation.amount.abs %></p>
+      <% else %>
+        <p>+$<%= operation.amount %></p>
+      <% end %>
     </div>
   <% end %>
 </li>

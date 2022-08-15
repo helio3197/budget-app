@@ -2,7 +2,7 @@
   <%= render 'header_index' %>
 <% end %>
 
-<section class="d-flex flex-column h-100 pb-3 overflow-auto">
+<section class="d-flex flex-column h-100 pb-3 overflow-auto position-relative" id="modal-parent">
   <%= render 'components/balance_bar' %>
   <div class="container-fluid py-2">
     <div class="container-sm category-item flex-column">
@@ -30,7 +30,7 @@
         </ul>
       </div>
       <h4 class="text-decoration-underline">Expenses by categories</h4>
-      <div data-turbo-cache="false" class="position-relative mb-3">
+      <div class="position-relative mb-3" data-controller="previewing">
         <%= bar_chart bar_chart_data, bar_chart_options %>
         <% if @categories_expenses.empty? %>
           <div
@@ -39,11 +39,21 @@
           >
             There are no metrics available at this moment.
           </div>
+        <% else %>
+          <div
+            data-previewing-target="loading"
+            class="position-absolute d-flex d-none text-center top-0 bottom-0 start-0 end-0 align-items-center justify-content-center"
+            style="background: #7a848e38;"
+          >
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
         <% end %>
       </div>
       <h4 class="text-decoration-underline m-0">Daily transactions</h4>
       <turbo-frame id="line-chart">
-        <div data-turbo-cache="false" class="position-relative">
+        <div class="position-relative" data-controller="previewing">
           <div class="text-end">
             <%= 
               link_to_if params[:lchart_days] == '7', 'Last 14 days', url_for(only_path: true, params: { lchart_days: 14 }) do
@@ -52,21 +62,22 @@
             %>
           </div>
           <%= line_chart line_chart_data, line_chart_options %>
-          <% if @categories_expenses.empty? %>
-            <div
-              class="position-absolute text-center top-0 bottom-0 start-0 end-0 d-flex align-items-center justify-content-center"
-              style="background: #7a848e38;"
-            >
-              There are no metrics available at this moment.
+          <div
+            data-previewing-target="loading"
+            class="position-absolute d-flex d-none text-center top-0 bottom-0 start-0 end-0 align-items-center justify-content-center"
+            style="background: #7a848e38;"
+          >
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
             </div>
-          <% end %>
+          </div>
         </div>
       </turbo-frame>
     </div>
   </div>
   <div class="container-fluid bg-light py-2">
     <div class="container-sm">
-      <h3 class="m-0 fs-4">Transaction history</h3>
+      <h3 class="m-0 fs-4">Transactions history</h3>
     </div>
   </div>
   <% if @user_budget_ops.empty? %>
@@ -78,8 +89,10 @@
           <turbo-frame id="page-<%= params[:page] %>">
             <%= render partial: 'categories/operation', collection: @user_budget_ops %>
             <div class="text-center">
-              <%= link_to 'Load older transactions', url_for(only_path: true, params: { page: params[:page].to_i + 1 }),
-                          data: { turbo_frame: "page-#{params[:page].to_i + 1}" }, onclick: 'this.style.display = "none"' %>
+              <% if params[:page].to_i + 1 < max_pages(@budget_operations_length) %>
+                <%= link_to 'Load older transactions', url_for(only_path: true, params: { page: params[:page].to_i + 1, page_items: params[:page_items] }),
+                            data: { turbo_frame: "page-#{params[:page].to_i + 1}" }, onclick: 'this.style.display = "none"' %>
+              <% end %>
             </div>
             <turbo-frame id="page-<%= params[:page].to_i + 1 %>">
             </turbo-frame>
@@ -88,4 +101,8 @@
       </div>
     </div>
   <% end %>
+  
+  <turbo-frame id="operation-modal">
+  </turbo-frame>
+
 </section>

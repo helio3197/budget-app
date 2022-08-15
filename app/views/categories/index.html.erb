@@ -13,7 +13,7 @@
       </div>
     </div>
   <% end %>
-  <div hidden class="container-fluid bg-light py-2" style="margin-top: -1px" data-controller="search-item" data-action="search-item:update@window->search-item#toggleComponent" data-turbo-cache="false">
+  <div hidden class="container-fluid bg-light py-2" style="margin-top: -1px" data-controller="search-item" data-action="search-item:update@window->search-item#toggleComponent">
     <form class="input-group container-sm px-0" method="get" action="/categories">
       <input type="text" class="form-control" required name="search" placeholder="Search by category name" aria-label="Search by category name" aria-describedby="search-btn">
       <button class="btn btn-secondary" type="submit" id="search-btn">Search</button>

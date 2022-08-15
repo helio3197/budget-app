@@ -1,0 +1,83 @@
+<turbo-frame id="operation-modal">
+  <div class="modal fade" id="operation-<%= params[:id] %>" tabindex="-1" aria-labelledby="operationModalLabel" aria-hidden="true" data-turbo-cache="false">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content" data-controller="operation-modal">
+        <div class="modal-header">
+          <h5 class="modal-title" id="operationModalLabel">Operation #<%= @operation.id %></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body position-relative" data-operation-modal-target="modalBody">
+          <p><span class="fw-bold">Date:</span> <%= @operation.created_at.localtime.strftime "%b %d %Y at %l:%M %P" %> </p>
+          <p><span class="fw-bold">Name:</span> <%= @operation.name %> </p>
+          <p>
+            <span class="fw-bold">Amount:</span>
+            <% if @operation.amount.negative? %>
+              <span class="text-danger">-$<%= @operation.amount.abs %></span>
+            <% else %>
+              <span class="text-success">+$<%= @operation.amount %></span>
+            <% end %>
+          </p>
+          <p>
+            <span class="fw-bold">Description:</span>
+            <% if @operation.description.empty? %>
+              <span class="fst-italic text-gray-600">No description was provided for this operation.</span>
+            <% else %>
+              <%= @operation.description %>
+            <% end %>
+          </p>
+          <div>
+            <p><span class="fw-bold">Categories:</span></p>
+            <ul class="m-0">
+              <% if @operation.categories.first.name == 'personal_budget' %>
+                <li class="dropdown-item d-flex align-items-center gap-2">
+                  <p class="m-0 fst-italic text-gray-600">Personal balance</p>
+                </li>
+              <% else %>
+                <% @operation.categories.each do |category| %>
+                  <li class="dropdown-item d-flex align-items-center gap-2 mb-2">
+                    <img src=<%= url_for category.icon %> class="icon-thumbnail dropdow-icon-thumbnail" alt="category item">
+                    <p class="m-0 text-truncate"><%= category.name %></p>
+                  </li>
+                <% end %>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <% unless params[:ref] == 'budget' || @operation.reverted %>
+            <div class="dropdown">
+              <button
+                class="btn btn-primary dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                data-operation-modal-target="dropdownBtn"
+              >
+                Actions
+              </button>
+              <ul class="dropdown-menu dropdown-menu-dark">
+                <li>
+                  <button
+                    class="dropdown-item"
+                    type="button"                    
+                    <% if @operation.created_at < Time.now - 2.days %>
+                      data-action="operation-modal#showError"
+                      data-operation-modal-error-param="This operation cannot be reverted. Only operations less than 2 days old can be refunded."
+                    <% else %>
+                      data-action="operation-modal#confirm"
+                      data-operation-modal-action-param="revert"
+                      data-operation-modal-action-params-param='{"id":"<%= @operation.id %>","category-id":"<%= params[:category] %>"}'
+                    <% end %>
+                  >
+                    Revert operation
+                  </button>
+                </li>
+              </ul>
+            </div>
+          <% end %>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</turbo-frame>

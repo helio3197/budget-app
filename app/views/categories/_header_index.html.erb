@@ -1,9 +1,16 @@
-<button class="navbar-toggler p-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+<button
+  class="navbar-toggler p-0"
+  type="button"
+  
+  aria-controls="offcanvasNavbar"
+  data-controller="open-menu"
+  data-action="open-menu#openMenu"
+>
   <span class="navbar-toggler-icon"></span>
 </button>
 <h2 class="mx-lg-auto">CATEGORIES</h2>
 <button type="button" class="action-btn btn btn-link text-light fs-5 p-0 off" data-controller="search-item" data-action="search-item#update"
-        data-search-item-state-value="false">
+        data-search-item-state-value="false" id="search-categories">
   <i class="fa-solid fa-magnifying-glass item-on"></i>
   <i class="fa-solid fa-xmark item-off"></i>
 </button>

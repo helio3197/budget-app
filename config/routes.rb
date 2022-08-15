@@ -3,8 +3,12 @@ Rails.application.routes.draw do
                                                                                sessions: 'sessions' }
 
   resources :categories do
-    resources :operations
+    resources :operations, except: %i[index show]
   end
+
+  resources :operations, only: %i[index show update]
+
+  get 'categories/:id/operations', to: redirect('categories/%{id}')
 
   get 'my_budget', to: 'budget#index'
   get 'my_budget/deposit', to: 'budget#new_deposit'
@@ -24,4 +28,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "categories#index"
+
+  get 'get-image', to: 'utils#fetch_image'
 end

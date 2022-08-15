@@ -2,13 +2,19 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   initialize() {
-    this.menuHandler = new bootstrap.Offcanvas(`#${this.element.id}`)
+    document.addEventListener('turbo:before-cache', () => {
+      document.querySelector('.offcanvas-backdrop.fade')?.remove()
+    })
+  }
+
+  open() {
+    this.menuHandler.show()
   }
 
   connect() {
-    const fixFade = document.querySelector('.offcanvas-backdrop.fade')
-    fixFade && fixFade.remove()
+    this.menuHandler = new bootstrap.Offcanvas(`#${this.element.id}`)
   }
+
 
   disconnect() {
     this.menuHandler.hide()

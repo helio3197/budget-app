@@ -5,6 +5,7 @@ class Operation < ApplicationRecord
   validates_associated :user
   validates :categories, presence: true
   validates :name, presence: true, length: { maximum: 50 }
+  validates :description, length: { maximum: 300 }
   validates :amount, numericality: true, presence: true,
                      format: { with: /\A[-+]?\d+(?:\.\d{0,2})?\z/, message: 'max two decimal positions' }
   validates :amount, comparison: { other_than: 0, message: 'must be greater than 0' }
