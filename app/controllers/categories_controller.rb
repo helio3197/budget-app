@@ -9,10 +9,10 @@ class CategoriesController < ApplicationController
     if user_signed_in?
       @categories = if params[:search].present?
                       current_user.categories.includes([icon_attachment: :blob])
-                        .where('name ~* ? and name != ?', params[:search], 'personal_budget').order created_at: :desc
+                        .where('name ~* ? and name != ?', params[:search], 'personal_budget').order name: :asc
                     else
                       current_user.categories.includes([icon_attachment: :blob]).where('name != ?', 'personal_budget')
-                        .order created_at: :desc
+                        .order name: :asc
                     end
     else
       render :home
