@@ -1,3 +1,5 @@
+require 'utils/fetch_url'
+
 class CategoriesController < ApplicationController
   before_action :authenticate_user!, except: %i[index]
   before_action :set_category, only: %i[edit update destroy]
@@ -30,6 +32,20 @@ class CategoriesController < ApplicationController
 
   def create
     @category = Category.new(**category_params, user: current_user)
+
+    unless params[:img].nil?
+      req = FetchUrl.new(params[:img])
+
+      if req.ok?
+        @category.icon.attach(io: StringIO.new(req.response.read_body),
+                              filename: "#{@category.name}_category.#{req.response.content_type.split('/')[1]}",
+                              content_type: req.response.content_type)
+      else
+        @category.errors.add(:icon, :invalid, message: 'is invalid.')
+        render :new, status: :unprocessable_entity
+        return
+      end
+    end
 
     if @category.save(context: :category_creation)
       redirect_to categories_path, notice: 'Category created successfully.'
