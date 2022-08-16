@@ -12,9 +12,19 @@
     <div class="container-fluid">
       <div class="container-sm py-2 px-0">
         <div class="category-item flex-column">
-          <div class="d-flex align-items-center gap-3">
+          <div class="d-flex align-items-center">
             <%= image_tag @category.icon, alt: 'icon', class: 'category-item-icon' %>
-            <h3 class="m-0 overflow-hidden"><%= @category.name %></h3>
+            <h3 class="m-0 ms-3 overflow-hidden"><%= @category.name %></h3>
+            <div class="dropdown align-self-start ms-auto">
+              <button class="btn btn-link fs-5 py-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+              </button>
+              <ul class="dropdown-menu">
+                <li>
+                  <button class="dropdown-item">example</button>
+                </li>
+              </ul>
+            </div>
           </div>
           <div class="p-2">
             <% if  @category.description.nil? || @category.description.empty? %>
