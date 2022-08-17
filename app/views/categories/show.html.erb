@@ -2,7 +2,7 @@
   <%= render 'header_show' %>
 <% end %>
 
-<section class="d-flex flex-column h-100 pb-3 overflow-hidden" id="modal-parent">
+<section class="d-flex flex-column h-100 pb-3 overflow-hidden" id="modal-parent" data-controller="categories">
   <div class="overflow-auto">
     <div class="container-fluid bg-light sticky-top">
       <div class="container-sm py-2">
@@ -21,7 +21,16 @@
               </button>
               <ul class="dropdown-menu">
                 <li>
-                  <button class="dropdown-item">example</button>
+                  <button class="dropdown-item">
+                    <i class="fa-solid fa-pencil text-primary"></i>
+                    <span>Edit</span>
+                  </button>
+                </li>
+                <li>
+                  <button class="dropdown-item" data-action="categories#delete">
+                    <i class="fa-solid fa-trash text-primary"></i>
+                    <span>Delete</span>
+                  </button>
                 </li>
               </ul>
             </div>
