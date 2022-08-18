@@ -58,7 +58,7 @@ class CategoriesController < ApplicationController
     category = current_user.categories.find(params[:id])
     category.destroy
 
-    redirect_to root_path, notice: 'Category deleted successfully.'
+    redirect_to root_path, notice: 'Category deleted successfully.', status: :see_other
   end
 
   private
