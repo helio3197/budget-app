@@ -3,7 +3,7 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ['confirmModal']
 
-  delete() {
+  delete({ params: { id } }) {
     const confirmModalWrap = document.createElement('div')
     confirmModalWrap.dataset.turboCache = 'false'
     confirmModalWrap.innerHTML = `
@@ -25,7 +25,14 @@ export default class extends Controller {
               This operation is irreversible.
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Yes</button>
+              <a
+                class="btn btn-primary"
+                data-turbo-method="delete"
+                href="/categories/${id}"
+                data-action="categories#removeResizeObserver"
+              >
+                Yes
+              </a>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
             </div>
           </div>
@@ -47,9 +54,14 @@ export default class extends Controller {
       this.confirmModalTarget.style.width = `${this.element.offsetWidth}px`
       this.confirmModalTarget.firstElementChild.style.height = `calc(${this.element.offsetHeight}px - var(--bs-modal-margin) * 2)`
     })
+    this.modalResizeObserver = resizeObserver
     resizeObserver.observe(this.element)
     this.confirmModalTarget.addEventListener('hide.bs.modal', () => {
       resizeObserver.unobserve(this.element)
     })
+  }
+
+  removeResizeObserver() {
+    this.modalResizeObserver.unobserve(this.element)
   }
 }
