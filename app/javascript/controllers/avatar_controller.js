@@ -90,7 +90,7 @@ export default class extends Controller {
   }
 
   processImgUrl() {
-    if (!/^https?:\/\/(?:[\w-]+\.)?[\w-]+\.\w+(?:\/.+)$/.test(this.imgUrlTarget.value)) {
+    if (!/^https?:\/\/(?:[\w-]+\.)?[\w-]+\.\w{2,3}(?:\/.+)$/.test(this.imgUrlTarget.value)) {
       this.imgUrlTarget.classList.add('is-invalid')
       return
     }

@@ -2,7 +2,7 @@ class FetchUrl
   attr_reader :response
 
   def initialize(uri)
-    if uri.match?(%r{\Ahttps?://(?:[\w-]+\.)?[\w-]+\.\w+(?:/.+)\z})
+    if uri.match?(%r{\Ahttps?://(?:[\w-]+\.)?[\w-]+\.\w{2,3}(?:/.+)\z})
       @uri = URI(uri)
       @response = Net::HTTP.get_response(@uri)
     else
