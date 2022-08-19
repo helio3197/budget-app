@@ -1,0 +1,10 @@
+<% content_for :sidebar do %>
+  <%= render 'navigation/sidebar', persist: false %>
+  <script>
+    setTimeout(() => {
+      window.Turbo.clearCache()
+    }, 1);
+  </script>
+<% end %>
+
+<%= render template: 'layouts/application' %>

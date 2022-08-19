@@ -5,7 +5,9 @@
     data-action="open-menu:openmenu@document->slide-menu#open"
     tabindex="-1"
     id="offcanvasNavbar"
-    data-turbo-permanent
+    <% if persist %>
+      data-turbo-permanent
+    <% end %>
     aria-labelledby="offcanvasNavbarLabel"
   >
     <div class="offcanvas-header">

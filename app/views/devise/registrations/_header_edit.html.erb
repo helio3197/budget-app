@@ -2,4 +2,10 @@
   <i class="fa-solid fa-arrow-left"></i>
 <% end %>
 <h2>ACCOUNT</h2>
-<button form="edit_user" class="action-btn btn btn-link text-light fs-5 p-0">Update</button>
+<button
+  form="edit_user"
+  class="action-btn btn btn-link text-light fs-5 p-0"
+  onclick="document.getElementById('offcanvasNavbar').removeAttribute('data-turbo-permanent')"
+>
+  Update
+</button>

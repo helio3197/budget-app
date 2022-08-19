@@ -14,6 +14,10 @@ class CategoriesController < ApplicationController
                       current_user.categories.includes([icon_attachment: :blob]).where('name != ?', 'personal_budget')
                         .order name: :asc
                     end
+
+      render(:index) and return if params[:ref].nil?
+
+      render layout: 'after_update'
     else
       render :home
     end
