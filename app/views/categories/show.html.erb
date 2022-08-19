@@ -2,7 +2,12 @@
   <%= render 'header_show' %>
 <% end %>
 
-<section class="d-flex flex-column h-100 pb-3 overflow-hidden" id="modal-parent" data-controller="categories">
+<section
+  class="d-flex flex-column h-100 pb-3 overflow-hidden"
+  id="modal-parent"
+  data-controller="categories avatar"
+  data-action="avatar:closemodal->categories#hideIconUpdater"
+>
   <div class="overflow-auto">
     <div class="container-fluid bg-light sticky-top">
       <div class="container-sm py-2">
@@ -14,7 +19,7 @@
         <turbo-frame id="edit-category">
           <div class="category-item flex-column">
             <div class="d-flex align-items-center">
-              <%= image_tag @category.icon, alt: 'icon', class: 'category-item-icon' %>
+              <%= image_tag @category.icon, alt: 'icon', class: 'category-item-icon', data: { avatar_target: 'preview' } %>
               <h3 class="m-0 ms-3 overflow-hidden"><%= @category.name %></h3>
               <div class="dropdown align-self-start ms-auto">
                 <button class="btn btn-link fs-5 py-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">

@@ -1,6 +1,6 @@
 <turbo-frame id="edit-category">
   <%= form_with(model: @category, url: category_path, class: 'form', id: 'edit_category',
-                data: { turbo_frame: '_top' }) do |form| %>
+                data: { turbo_frame: '_top', avatar_target: 'form' }) do |form| %>
     <div class="category-item flex-column">
       <% if @category.errors.any? %>
         <div data-turbo-cache="false">
@@ -13,7 +13,17 @@
         </div>
       <% end %>
       <div class="d-flex align-items-center">
-        <%= image_tag @category.icon, alt: 'icon', class: 'category-item-icon' %>
+        <div class="category-item-icon position-relative">
+          <%= image_tag @category.icon, alt: 'icon', class: 'w-100 h-100', style: 'object-fit: cover',
+                                        data: { avatar_target: 'preview' } %>
+          <button
+            type="button"
+            class="position-absolute top-0 start-0 btn btn-link pt-0 ps-1 blurred-radial-gradient link-light"
+            data-action="categories#showIconUpdater"
+          >
+            <i class="fa-solid fa-pencil"></i>
+          </button>
+        </div>
         <div class="field ms-3 me-2 w-100">
           <%= form.label :name, class: 'd-none' %>
           <%= form.text_field :name, autofocus: true, autocomplete: 'name', class: 'form-control fs-3', placeholder: 'Name' %>

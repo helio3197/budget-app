@@ -10,6 +10,7 @@ export default class extends Controller {
     'removeAvatarBtn',
     'uploadArea',
     'imgUrl',
+    'form',
   ]
   static values = { placeholderPic: String }
 
@@ -59,7 +60,7 @@ export default class extends Controller {
     this.avatarRemoved = true
   }
 
-  showUrlInput() {
+  showUrlInput({ params: { modal } }) {
     this.originalUploadArea = this.uploadAreaTarget.cloneNode(true)
     this.uploadAreaTarget.innerHTML = `
       <div class="input-group has-validation">
@@ -70,7 +71,12 @@ export default class extends Controller {
           style="min-width: 100px"
           data-avatar-target="imgUrl"
         >
-        <button class="btn btn-outline-primary" type="button" data-action="avatar#processImgUrl">
+        <button
+          class="btn btn-outline-primary"
+          type="button"
+          data-action="avatar#processImgUrl"
+          ${modal ? 'data-avatar-modal-param="true"' : ''}
+        >
           <span class="d-none d-sm-inline">Ok</span>
           <i class="fa-solid fa-check"></i>
         </button>
@@ -89,14 +95,14 @@ export default class extends Controller {
     this.uploadAreaTarget.replaceWith(this.originalUploadArea)
   }
 
-  processImgUrl() {
+  processImgUrl({ params: { modal } }) {
     if (!/^https?:\/\/(?:[\w-]+\.)?[\w-]+\.\w{2,3}(?:\/.+)$/.test(this.imgUrlTarget.value)) {
       this.imgUrlTarget.classList.add('is-invalid')
       return
     }
 
     this.previewTarget.src = `/get-image?img=${this.imgUrlTarget.value}`
-    this.formElement = this.imgUrlTarget.form
+    this.formElement = this.imgUrlTarget.form || this.formTarget
     this.formElement.action += `?img=${this.imgUrlTarget.value}`
     this.uploadAreaTarget.innerHTML = `
       <div class="file-selection">
@@ -106,6 +112,9 @@ export default class extends Controller {
         </button>
       </div>
     `
+
+    if (modal) this.dispatch('closemodal', { detail: { removeIconInput: true } })
+
     return
   }
 
