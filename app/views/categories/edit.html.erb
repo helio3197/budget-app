@@ -1,0 +1,31 @@
+<turbo-frame id="edit-category">
+  <%= form_with(model: @category, url: category_path, class: 'form', id: 'edit_category') do |form| %>
+    <div class="category-item flex-column">
+      <% if @category.errors.any? %>
+        <div data-turbo-cache="false">
+          <h2><%= pluralize(@category.errors.count, "error") %> prohibited this category from being saved:</h2>
+          <ul>
+            <% @category.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <div class="d-flex align-items-center">
+        <%= image_tag @category.icon, alt: 'icon', class: 'category-item-icon' %>
+        <div class="field ms-3 me-2 w-100">
+          <%= form.label :name, class: 'd-none' %>
+          <%= form.text_field :name, autofocus: true, autocomplete: 'name', class: 'form-control fs-3', placeholder: 'Name' %>
+        </div>
+      </div>
+      <div class="field p-2">
+        <%= form.label :description, class: 'd-none' %>
+        <%= form.text_area :description, class: 'form-control', placeholder: 'Description (optional)', rows: '2' %>
+      </div>
+      <div class="px-2 d-flex gap-2">
+        <button class="btn btn-primary" type="submit">Save</button>
+        <%= link_to 'Cancel', category_path(params[:id]), class: 'btn btn-secondary' %>
+      </div>
+    </div>
+  <% end %>
+</turbo-frame>

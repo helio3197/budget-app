@@ -11,41 +11,43 @@
     </div>
     <div class="container-fluid">
       <div class="container-sm py-2 px-0">
-        <div class="category-item flex-column">
-          <div class="d-flex align-items-center">
-            <%= image_tag @category.icon, alt: 'icon', class: 'category-item-icon' %>
-            <h3 class="m-0 ms-3 overflow-hidden"><%= @category.name %></h3>
-            <div class="dropdown align-self-start ms-auto">
-              <button class="btn btn-link fs-5 py-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa-solid fa-ellipsis-vertical"></i>
-              </button>
-              <ul class="dropdown-menu">
-                <li>
-                  <button class="dropdown-item">
-                    <i class="fa-solid fa-pencil text-primary"></i>
-                    <span>Edit</span>
-                  </button>
-                </li>
-                <li>
-                  <button class="dropdown-item" data-action="categories#delete" data-categories-id-param="<%= @category.id %>">
-                    <i class="fa-solid fa-trash text-primary"></i>
-                    <span>Delete</span>
-                  </button>
-                </li>
-              </ul>
+        <turbo-frame id="edit-category">
+          <div class="category-item flex-column">
+            <div class="d-flex align-items-center">
+              <%= image_tag @category.icon, alt: 'icon', class: 'category-item-icon' %>
+              <h3 class="m-0 ms-3 overflow-hidden"><%= @category.name %></h3>
+              <div class="dropdown align-self-start ms-auto">
+                <button class="btn btn-link fs-5 py-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <%= link_to edit_category_path(params[:id]), class: 'dropdown-item' do %>
+                      <i class="fa-solid fa-pencil text-primary"></i>
+                      <span>Edit</span>
+                    <% end %>
+                  </li>
+                  <li>
+                    <button class="dropdown-item" data-action="categories#delete" data-categories-id-param="<%= @category.id %>">
+                      <i class="fa-solid fa-trash text-primary"></i>
+                      <span>Delete</span>
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="p-2">
+              <% if  @category.description.nil? || @category.description.empty? %>
+                <p class="fst-italic text-gray-600 m-0">No provided description.</p>
+              <% else %>
+                <p class="m-0"><%= @category.description %></p>
+              <% end %>
+            </div>
+            <div class="px-2 d-flex flex-column mt-2">
+              <small class="mt-auto">Created at: <%= @category.created_at.strftime "%m-%d-%Y" %></small>
             </div>
           </div>
-          <div class="p-2">
-            <% if  @category.description.nil? || @category.description.empty? %>
-              <p class="fst-italic text-gray-600 m-0">No provided description.</p>
-            <% else %>
-              <p class="m-0"><%= @category.description %></p>
-            <% end %>
-          </div>
-          <div class="px-2 d-flex flex-column mt-2">
-            <small class="mt-auto">Created at: <%= @category.created_at.strftime "%m-%d-%Y" %></small>
-          </div>
-        </div>
+        </turbo-frame>
       </div>
     </div>
     <div class="container-fluid bg-light py-2">
