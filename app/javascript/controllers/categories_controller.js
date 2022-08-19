@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import subscribeModal from "utils/subscribe_modal"
 
 export default class extends Controller {
   static targets = ['confirmModal']
@@ -44,21 +45,8 @@ export default class extends Controller {
     const confirmModal = new bootstrap.Modal('#confirmAction')
     confirmModal.show()
     const modalBackdrop = document.querySelector('.modal-backdrop.fade')
-    modalBackdrop.dataset.turboCache = 'false'
 
-    const resizeObserver = new ResizeObserver(() => {
-      modalBackdrop.style.top = `${this.element.offsetTop}px`
-      modalBackdrop.style.left = `${this.element.offsetLeft}px`
-      this.confirmModalTarget.style.top = `${this.element.offsetTop}px`
-      this.confirmModalTarget.style.left = `${this.element.offsetLeft}px`
-      this.confirmModalTarget.style.width = `${this.element.offsetWidth}px`
-      this.confirmModalTarget.firstElementChild.style.height = `calc(${this.element.offsetHeight}px - var(--bs-modal-margin) * 2)`
-    })
-    this.modalResizeObserver = resizeObserver
-    resizeObserver.observe(this.element)
-    this.confirmModalTarget.addEventListener('hide.bs.modal', () => {
-      resizeObserver.unobserve(this.element)
-    })
+    this.modalResizeObserver = subscribeModal(this.element, this.confirmModalTarget, modalBackdrop)
   }
 
   removeResizeObserver() {

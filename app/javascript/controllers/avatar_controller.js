@@ -64,7 +64,7 @@ export default class extends Controller {
     this.uploadAreaTarget.innerHTML = `
       <div class="input-group has-validation">
         <input
-          type="text"
+          type="url"
           class="form-control"
           placeholder="Image source URL"
           style="min-width: 100px"
