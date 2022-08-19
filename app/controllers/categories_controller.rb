@@ -2,7 +2,7 @@ require 'utils/fetch_url'
 
 class CategoriesController < ApplicationController
   before_action :authenticate_user!, except: %i[index]
-  before_action :set_category, only: %i[edit update destroy]
+  before_action :set_category, only: %i[show edit update destroy]
   before_action :check_params, only: [:show]
 
   def index
@@ -24,7 +24,6 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    @category = current_user.categories.find(params[:id])
     @operations_length = @category.operations.length
     @category_operations = @category.operations.order(created_at: :desc).limit(params[:page_items].to_i)
       .offset(params[:page].to_i * params[:page_items].to_i)
@@ -59,8 +58,7 @@ class CategoriesController < ApplicationController
   end
 
   def destroy
-    category = current_user.categories.find(params[:id])
-    category.destroy
+    @category.destroy
 
     redirect_to root_path, notice: 'Category deleted successfully.', status: :see_other
   end
