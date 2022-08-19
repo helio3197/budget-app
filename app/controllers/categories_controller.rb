@@ -57,6 +57,14 @@ class CategoriesController < ApplicationController
     end
   end
 
+  def update
+    if @category.update(category_params)
+      redirect_to category_path(params[:id]), notice: 'Category updated successgully.'
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   def destroy
     @category.destroy
 
