@@ -58,8 +58,23 @@ class CategoriesController < ApplicationController
   end
 
   def update
+    category_params = self.category_params
+    unless params[:img].nil?
+      req = FetchUrl.new(params[:img])
+
+      if req.ok?
+        category_params[:icon] = build_tempfile req.response.read_body,
+                                                req.response.content_type.split('/')[1],
+                                                req.response.content_type
+      else
+        @category.errors.add(:icon, :invalid, message: 'is invalid.')
+        render :edit, status: :unprocessable_entity
+        return
+      end
+    end
+
     if @category.update(category_params)
-      redirect_to category_path(params[:id]), notice: 'Category updated successgully.'
+      redirect_to category_path(params[:id]), notice: 'Category updated successfully.'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -84,5 +99,17 @@ class CategoriesController < ApplicationController
   def check_params
     params[:page] ||= '0'
     params[:page_items] ||= '5'
+  end
+
+  def build_tempfile(body, filename, type)
+    tmp = Tempfile.new
+    tmp.binmode
+    tmp << body
+    ActionDispatch::Http::UploadedFile
+      .new({
+             tempfile: tmp,
+             filename:,
+             type:
+           })
   end
 end
