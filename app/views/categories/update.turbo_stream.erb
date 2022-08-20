@@ -1,0 +1,10 @@
+<%= turbo_stream.update 'flash-messages' do %>
+  <div data-turbo-cache="false" class="alert alert-secondary alert-dismissible fade show m-0"role="alert">
+    <strong>Category updated successfully.</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% end %>
+
+<%= turbo_stream.update 'edit-category' do %>
+  <%= render 'category_details' %>
+<% end %>

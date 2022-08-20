@@ -27,18 +27,20 @@
           </div>
         </nav>
       <% end %>
-      <% if notice %>
-        <div data-turbo-cache="false" class="alert alert-secondary alert-dismissible fade show m-0"role="alert">
-          <strong><%= notice %></strong>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-      <% end %>
-      <% if alert %>
-        <div data-turbo-cache="false" class="alert alert-secondary alert-dismissible fade show m-0"role="alert">
-          <strong><%= alert %></strong>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-      <% end %>
+      <div id="flash-messages">
+        <% if notice %>
+          <div data-turbo-cache="false" class="alert alert-secondary alert-dismissible fade show m-0"role="alert">
+            <strong><%= notice %></strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        <% end %>
+        <% if alert %>
+          <div data-turbo-cache="false" class="alert alert-secondary alert-dismissible fade show m-0"role="alert">
+            <strong><%= alert %></strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        <% end %>
+      </div>
 
       <%= yield %>
     </div>

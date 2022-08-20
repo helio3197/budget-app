@@ -74,7 +74,10 @@ class CategoriesController < ApplicationController
     end
 
     if @category.update(category_params)
-      redirect_to category_path(params[:id]), notice: 'Category updated successfully.'
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to category_path(params[:id]), notice: 'Category updated successfully.' }
+      end
     else
       render :edit, status: :unprocessable_entity
     end
