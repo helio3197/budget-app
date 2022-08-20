@@ -2,7 +2,12 @@
   <%= render 'header_show' %>
 <% end %>
 
-<section class="d-flex flex-column h-100 pb-3 overflow-hidden" id="modal-parent">
+<section
+  class="d-flex flex-column h-100 pb-3 overflow-hidden"
+  id="modal-parent"
+  data-controller="categories avatar"
+  data-action="avatar:closemodal->categories#hideIconUpdater"
+>
   <div class="overflow-auto">
     <div class="container-fluid bg-light sticky-top">
       <div class="container-sm py-2">
@@ -11,22 +16,9 @@
     </div>
     <div class="container-fluid">
       <div class="container-sm py-2 px-0">
-        <div class="category-item flex-column">
-          <div class="d-flex align-items-center gap-3">
-            <%= image_tag @category.icon, alt: 'icon', class: 'category-item-icon' %>
-            <h3 class="m-0 overflow-hidden"><%= @category.name %></h3>
-          </div>
-          <div class="p-2">
-            <% if  @category.description.nil? || @category.description.empty? %>
-              <p class="fst-italic text-gray-600 m-0">No provided description.</p>
-            <% else %>
-              <p class="m-0"><%= @category.description %></p>
-            <% end %>
-          </div>
-          <div class="px-2 d-flex flex-column mt-2">
-            <small class="mt-auto">Created at: <%= @category.created_at.strftime "%m-%d-%Y" %></small>
-          </div>
-        </div>
+        <turbo-frame id="edit-category">
+          <%= render 'category_details' %>
+        </turbo-frame>
       </div>
     </div>
     <div class="container-fluid bg-light py-2">

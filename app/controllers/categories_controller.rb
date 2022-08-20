@@ -2,7 +2,7 @@ require 'utils/fetch_url'
 
 class CategoriesController < ApplicationController
   before_action :authenticate_user!, except: %i[index]
-  before_action :set_category, only: %i[edit update destroy]
+  before_action :set_category, only: %i[show edit update destroy]
   before_action :check_params, only: [:show]
 
   def index
@@ -14,16 +14,20 @@ class CategoriesController < ApplicationController
                       current_user.categories.includes([icon_attachment: :blob]).where('name != ?', 'personal_budget')
                         .order name: :asc
                     end
+
+      render(:index) and return if params[:ref].nil?
+
+      render layout: 'after_update'
     else
       render :home
     end
   end
 
   def show
-    @category = current_user.categories.find(params[:id])
     @operations_length = @category.operations.length
     @category_operations = @category.operations.order(created_at: :desc).limit(params[:page_items].to_i)
       .offset(params[:page].to_i * params[:page_items].to_i)
+    render layout: 'no_preview'
   end
 
   def new
@@ -54,6 +58,37 @@ class CategoriesController < ApplicationController
     end
   end
 
+  def update
+    category_params = self.category_params
+    unless params[:img].nil?
+      req = FetchUrl.new(params[:img])
+
+      if req.ok?
+        category_params[:icon] = build_tempfile req.response.read_body,
+                                                req.response.content_type.split('/')[1],
+                                                req.response.content_type
+      else
+        @category.errors.add(:icon, :invalid, message: 'is invalid.')
+        render :edit, status: :unprocessable_entity and return
+      end
+    end
+
+    if @category.update(category_params)
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to category_path(params[:id]), notice: 'Category updated successfully.' }
+      end
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @category.destroy
+
+    redirect_to root_path, notice: 'Category deleted successfully.', status: :see_other
+  end
+
   private
 
   def category_params
@@ -67,5 +102,17 @@ class CategoriesController < ApplicationController
   def check_params
     params[:page] ||= '0'
     params[:page_items] ||= '5'
+  end
+
+  def build_tempfile(body, filename, type)
+    tmp = Tempfile.new
+    tmp.binmode
+    tmp << body
+    ActionDispatch::Http::UploadedFile
+      .new({
+             tempfile: tmp,
+             filename:,
+             type:
+           })
   end
 end

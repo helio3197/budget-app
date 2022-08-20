@@ -3,8 +3,6 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static values = { modalId: String }
 
-  
-
   show() {
     const modalFrame = document.getElementById('operation-modal')
     const showModal = () => {
