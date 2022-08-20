@@ -27,6 +27,7 @@ class CategoriesController < ApplicationController
     @operations_length = @category.operations.length
     @category_operations = @category.operations.order(created_at: :desc).limit(params[:page_items].to_i)
       .offset(params[:page].to_i * params[:page_items].to_i)
+    render layout: 'no_preview'
   end
 
   def new
@@ -68,8 +69,7 @@ class CategoriesController < ApplicationController
                                                 req.response.content_type
       else
         @category.errors.add(:icon, :invalid, message: 'is invalid.')
-        render :edit, status: :unprocessable_entity
-        return
+        render :edit, status: :unprocessable_entity and return
       end
     end
 
